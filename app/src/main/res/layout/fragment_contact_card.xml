@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ContactCard">
+
+    <data>
+        <variable
+            name="card"
+            type="com.example.phonebook.Card"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp">
+
+        <ImageView
+            android:id="@+id/contact_image"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="parent" />
+
+        <TextView
+            android:id="@+id/contact_card_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@={card.name}"
+            app:layout_constraintStart_toEndOf="@id/contact_image"
+            app:layout_constraintTop_toBottomOf="parent"/>
+
+        <TextView
+            android:id="@+id/contact_card_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@={card.phone}"
+            app:layout_constraintStart_toEndOf="@id/contact_image"
+            app:layout_constraintTop_toBottomOf="@id/contact_card_name"/>
+
+        <TextView
+            android:id="@+id/contact_card_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@={card.email}"
+            app:layout_constraintStart_toEndOf="@id/contact_image"
+            app:layout_constraintTop_toBottomOf="@id/contact_card_phone"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
