@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/floatingButton">
+    <fragment
+        android:id="@+id/floatingButton"
+        android:name="com.example.phonebook.FloatingButton"
+        android:label="FloatingButton" >
+        <action
+            android:id="@+id/action_floatingButton_to_addContact"
+            app:destination="@id/addContact" />
+    </fragment>
+    <fragment
+        android:id="@+id/addContact"
+        android:name="com.example.phonebook.AddContact"
+        android:label="AddContact" />
+</navigation>

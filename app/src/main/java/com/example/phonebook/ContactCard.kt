@@ -5,6 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import com.example.phonebook.databinding.FragmentContactCardBinding
 
 class ContactCard : Fragment() {
 
@@ -18,7 +20,11 @@ class ContactCard : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_contact_card, container, false)
+        val binding = DataBindingUtil.inflate<FragmentContactCardBinding>(inflater,
+            R.layout.fragment_contact_card,
+            container,
+            false)
+        return binding.root
 
     }
 }
