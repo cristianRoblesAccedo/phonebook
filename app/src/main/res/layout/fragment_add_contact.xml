@@ -9,7 +9,6 @@
         android:layout_height="match_parent"
         tools:context=".AddContact">
 
-
         <ImageView
             android:id="@+id/add_image_iv"
             android:layout_width="wrap_content"
@@ -21,7 +20,7 @@
             tools:srcCompat="@tools:sample/avatars" />
 
         <EditText
-            android:id="@+id/add_name"
+            android:id="@+id/add_name_et"
             android:hint="@string/hint_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -46,7 +45,7 @@
             android:inputType="textEmailAddress"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/add_name" />
+            app:layout_constraintTop_toBottomOf="@+id/add_name_et" />
 
         <EditText
             android:id="@+id/add_phone_et"
@@ -63,7 +62,7 @@
             app:layout_constraintTop_toBottomOf="@+id/add_email_et" />
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/add_btn"
             android:layout_width="wrap_content"
             android:layout_height="48dp"
             android:layout_marginStart="16dp"
