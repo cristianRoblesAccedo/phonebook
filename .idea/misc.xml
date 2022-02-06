@@ -9,6 +9,7 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_add_contact.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_add_contact_button.xml" value="0.21467391304347827" />
+        <entry key="app/src/main/res/layout/fragment_blank.xml" value="0.21467391304347827" />
         <entry key="app/src/main/res/layout/fragment_contact_card.xml" value="0.2990177983823028" />
         <entry key="app/src/main/res/layout/fragment_contact_card_list.xml" value="0.19610507246376813" />
         <entry key="app/src/main/res/layout/fragment_floating_button.xml" value="0.21467391304347827" />

@@ -9,10 +9,19 @@ import androidx.databinding.DataBindingUtil
 import com.example.phonebook.databinding.FragmentContactCardBinding
 
 class ContactCard : Fragment() {
+    private lateinit var card: Card
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        card = Card()
+        arguments?.let {
+            val name = arguments?.getString("name")
+            val email = arguments?.getString("email")
+            val phone = arguments?.getString("phone")
+            name?.let { card.name = it }
+            email?.let { card.email = it }
+            phone?.let { card.phone = it }
+        }
     }
 
     override fun onCreateView(
@@ -24,7 +33,7 @@ class ContactCard : Fragment() {
             R.layout.fragment_contact_card,
             container,
             false)
+        binding.card = card
         return binding.root
-
     }
 }

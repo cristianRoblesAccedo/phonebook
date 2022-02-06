@@ -7,7 +7,11 @@
     <fragment
         android:id="@+id/addContact"
         android:name="com.example.phonebook.AddContact"
-        android:label="AddContact" />
+        android:label="AddContact" >
+        <action
+            android:id="@+id/action_addContact_to_contactCardList"
+            app:destination="@id/contactCardList" />
+    </fragment>
     <fragment
         android:id="@+id/contactCardList"
         android:name="com.example.phonebook.ContactCardList"

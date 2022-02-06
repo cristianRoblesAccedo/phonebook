@@ -5,7 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.findNavController
 import com.example.phonebook.databinding.FragmentAddContactBinding
 
 class AddContact : Fragment() {
@@ -30,7 +32,7 @@ class AddContact : Fragment() {
     fun validateInput(view: View) {
         val nameLength = Pair(3, 50)
         val namePattern = """.{3,50}""".toRegex()
-        val emailPattern = """([\w\d_]+\.)+@[\w\d_]+(\.[\w\d]+)+""".toRegex()
+        val emailPattern = """([\w\d_]+\.)+[\w\d_]+@[\w\d_]+(\.[\w\d]+)+""".toRegex()
         val phonePattern = """(\(\+?\d{1,3}\)? ?)?((\(?\d{3} ?\)){2}\d{2} ?\d{2}|\(?\d{2}\)? ?\(?\d{4}\)? ?\(?\d{4}\)?)""".toRegex()
         var nameValid = false
         var emailValid = false
@@ -54,6 +56,7 @@ class AddContact : Fragment() {
         // If all fields are correct
         if (nameValid && emailValid && phoneValid) {
             // TODO: Create a new fragment and add it to ContactList
+            view.findNavController().navigate(R.id.action_addContact_to_contactCardList)
         }
     }
 }
