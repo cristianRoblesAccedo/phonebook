@@ -3,17 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
-    app:startDestination="@id/floatingButton">
-    <fragment
-        android:id="@+id/floatingButton"
-        android:name="com.example.phonebook.FloatingButton"
-        android:label="FloatingButton" >
-        <action
-            android:id="@+id/action_floatingButton_to_addContact"
-            app:destination="@id/addContact" />
-    </fragment>
+    app:startDestination="@id/contactCardList">
     <fragment
         android:id="@+id/addContact"
         android:name="com.example.phonebook.AddContact"
         android:label="AddContact" />
+    <fragment
+        android:id="@+id/contactCardList"
+        android:name="com.example.phonebook.ContactCardList"
+        android:label="ContactCardList" >
+        <action
+            android:id="@+id/action_contactCardList_to_addContact"
+            app:destination="@id/addContact" />
+    </fragment>
 </navigation>

@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.findNavController
 import com.example.phonebook.databinding.FragmentContactCardListBinding
 
 class ContactCardList : Fragment() {
@@ -24,6 +25,10 @@ class ContactCardList : Fragment() {
             R.layout.fragment_contact_card_list,
             container,
             false)
+        binding.addContactButton.setOnClickListener{ view: View ->
+            view.findNavController().navigate(R.id.action_contactCardList_to_addContact)
+        }
+
         return binding.root
     }
 }
