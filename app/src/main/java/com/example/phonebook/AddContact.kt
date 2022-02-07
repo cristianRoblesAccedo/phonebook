@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.example.phonebook.databinding.FragmentAddContactBinding
 
 class AddContact : Fragment() {
@@ -55,8 +56,13 @@ class AddContact : Fragment() {
 
         // If all fields are correct
         if (nameValid && emailValid && phoneValid) {
-            // TODO: Create a new fragment and add it to ContactList
-            view.findNavController().navigate(R.id.action_addContact_to_contactCardList)
+            // Returns back to contact list
+            findNavController().navigate(AddContactDirections.actionAddContactToContactCardList(
+                binding.addNameEt.text.toString(),
+                binding.addPhoneEt.text.toString(),
+                binding.addEmailEt.text.toString(),
+                ""
+            ))
         }
     }
 }

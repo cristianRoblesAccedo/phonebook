@@ -3,8 +3,7 @@
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".ContactCard">
+    xmlns:tools="http://schemas.android.com/tools" >
 
     <data>
         <variable
@@ -14,30 +13,34 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
+        android:layout_height="150dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:background="@android:color/darker_gray">
 
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/image_iv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
+            android:src="@drawable/ic_add_contact"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:src="@tools:sample/avatars" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/name_tv"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:text="@={card.name}"
+            app:layout_constraintBottom_toTopOf="@+id/email_tv"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imageView"
-            app:layout_constraintTop_toTopOf="@+id/imageView" />
+            app:layout_constraintStart_toEndOf="@+id/image_iv"
+            app:layout_constraintTop_toTopOf="@+id/image_iv" />
 
         <TextView
             android:id="@+id/email_tv"
@@ -47,8 +50,9 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:text="@={card.email}"
+            app:layout_constraintBottom_toTopOf="@+id/phone_tv"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imageView"
+            app:layout_constraintStart_toEndOf="@+id/image_iv"
             app:layout_constraintTop_toBottomOf="@+id/name_tv" />
 
         <TextView
@@ -59,8 +63,9 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:text="@={card.phone}"
+            app:layout_constraintBottom_toBottomOf="@+id/image_iv"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imageView"
+            app:layout_constraintStart_toEndOf="@+id/image_iv"
             app:layout_constraintTop_toBottomOf="@+id/email_tv" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

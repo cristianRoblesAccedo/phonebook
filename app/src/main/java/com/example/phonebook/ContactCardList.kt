@@ -7,13 +7,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.phonebook.databinding.FragmentContactCardListBinding
+
+val cardList = mutableListOf<Card>()
+var initList = false
 
 class ContactCardList : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
     }
 
     override fun onCreateView(
@@ -25,8 +28,18 @@ class ContactCardList : Fragment() {
             R.layout.fragment_contact_card_list,
             container,
             false)
+        val adapter = CardAdapter(cardList)
+        val args = ContactCardListArgs.fromBundle(requireArguments())
+
+        binding.contactCardList.layoutManager = LinearLayoutManager(context)
+        binding.contactCardList.adapter = adapter
         binding.addContactButton.setOnClickListener{ view: View ->
-            view.findNavController().navigate(R.id.action_contactCardList_to_addContact)
+            view.findNavController().navigate(ContactCardListDirections.actionContactCardListToAddContact())
+        }
+        args.name.let {
+            if (!it.isNullOrEmpty() && initList)
+                cardList.add(Card(it, args.phone!!, args.email!!, args.image!!))
+            initList = true
         }
 
         return binding.root
