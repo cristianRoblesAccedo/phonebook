@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.addCallback
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
@@ -22,11 +23,14 @@ class AddContact : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        // Sets a custom behaviour for the back button so that contacts in contactList are not duplicated
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+            findNavController().navigate(AddContactDirections.actionAddContactToContactCardList(null, null, null, null))
+        }
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_contact, container, false)
 
         binding.addBtn.setOnClickListener{ validateInput(it) }
-
         return binding.root
     }
 
@@ -53,6 +57,8 @@ class AddContact : Fragment() {
             binding.addPhoneEt.error = "Phone is not valid"
         else
             phoneValid = true
+
+
 
         // If all fields are correct
         if (nameValid && emailValid && phoneValid) {
