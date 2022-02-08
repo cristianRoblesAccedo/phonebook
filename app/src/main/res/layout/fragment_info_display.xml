@@ -20,8 +20,8 @@
             android:layout_width="200dp"
             android:layout_height="200dp"
             android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
             android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
             android:src="@drawable/ic_baseline_add_a_photo"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -29,41 +29,83 @@
 
         <TextView
             android:id="@+id/name_display_tv"
+            style="@style/basic_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            android:layout_marginTop="16dp"
             android:text="@={displayData.name}"
             app:layout_constraintBottom_toTopOf="@+id/email_display_tv"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView"/>
+            app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
         <TextView
             android:id="@+id/email_display_tv"
+            style="@style/basic_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
             android:text="@={displayData.email}"
             app:layout_constraintBottom_toTopOf="@+id/phone_display_tv"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/email_iv"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/name_display_tv" />
 
         <TextView
             android:id="@+id/phone_display_tv"
+            style="@style/basic_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="350dp"
             android:text="@={displayData.phone}"
+            android:layout_marginBottom="300dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/phone_iv"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/email_display_tv" />
+
+        <ImageView
+            android:id="@+id/phone_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:background="#4CAF50"
+            app:layout_constraintBottom_toBottomOf="@+id/phone_display_tv"
+            app:layout_constraintEnd_toStartOf="@+id/message_iv"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/phone_display_tv"
+            app:layout_constraintTop_toTopOf="@+id/phone_display_tv"
+            app:srcCompat="@drawable/ic_baseline_local_phone_24" />
+
+        <ImageView
+            android:id="@+id/message_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="27dp"
+            android:layout_marginEnd="16dp"
+            android:background="#4585E4"
+            app:layout_constraintBottom_toBottomOf="@+id/phone_display_tv"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/phone_iv"
+            app:layout_constraintTop_toTopOf="@+id/phone_display_tv"
+            app:srcCompat="@drawable/ic_baseline_message_24" />
+
+        <ImageView
+            android:id="@+id/email_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:background="#50D2D6"
+            app:layout_constraintBottom_toBottomOf="@+id/email_display_tv"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/email_display_tv"
+            app:layout_constraintTop_toTopOf="@+id/email_display_tv"
+            app:srcCompat="@drawable/ic_baseline_email_24" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

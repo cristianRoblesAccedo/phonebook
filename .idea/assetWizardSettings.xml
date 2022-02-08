@@ -304,7 +304,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="file:$USER_HOME$/Library/Android/sdk/icons/material/materialicons/add_a_photo/baseline_add_a_photo_24.xml" />
+                                      <entry key="url" value="file:$USER_HOME$/Library/Android/sdk/icons/material/materialicons/message/baseline_message_24.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -315,7 +315,7 @@
                         <option name="values">
                           <map>
                             <entry key="color" value="ffffff" />
-                            <entry key="outputName" value="ic_baseline_add_a_photo" />
+                            <entry key="outputName" value="ic_baseline_message_24" />
                           </map>
                         </option>
                       </PersistentState>

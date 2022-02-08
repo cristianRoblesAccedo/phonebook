@@ -30,11 +30,14 @@ class InfoDisplay : Fragment() {
         binding =  DataBindingUtil.inflate(inflater, R.layout.fragment_info_display, container, false)
         binding.displayData = displayData
 
-        binding.emailDisplayTv.setOnClickListener { _ ->
+        binding.emailIv.setOnClickListener { _ ->
             startActivity(getEmailIntent())
         }
-        binding.phoneDisplayTv.setOnClickListener { _ ->
+        binding.phoneIv.setOnClickListener { _ ->
             startActivity(getPhoneIntent())
+        }
+        binding.messageIv.setOnClickListener { _ ->
+            startActivity(getSmsIntent())
         }
 
         return binding.root
@@ -48,4 +51,9 @@ class InfoDisplay : Fragment() {
     // Creates an Intent for sending an email
     private fun getEmailIntent(): Intent = Intent(
         Intent.ACTION_SENDTO, Uri.fromParts("mailto", displayData.email, null))
+
+    // Creates an Intent for sending a text message
+    private fun getSmsIntent(): Intent = Intent(
+        Intent.ACTION_SENDTO, Uri.parse("smsto:${displayData.phone}")
+    )
 }

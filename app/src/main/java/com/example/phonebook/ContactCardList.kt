@@ -46,10 +46,11 @@ class ContactCardList : Fragment() {
         }
         // If a new user is created then we create a new element in cardList
         if (!args.name.isNullOrEmpty()) {
+            val tmpCard = Card(args.name!!, args.phone!!, args.email!!, args.image!!)
             if (cardList.size == 0)
-                cardList.add(Card(args.name!!, args.phone!!, args.email!!, args.image!!))
-            else if (cardList[cardList.size - 1] != Card(args.name!!, args.phone!!, args.email!!))
-                cardList.add(Card(args.name!!, args.phone!!, args.email!!, args.image!!))
+                cardList.add(tmpCard)
+            else if (cardList[cardList.size - 1] != tmpCard)
+                cardList.add(tmpCard)
         }
         // Displays msg on screen if cardList is empty
         binding.emptyListTv.visibility = if (cardList.size == 0) View.VISIBLE else View.GONE
