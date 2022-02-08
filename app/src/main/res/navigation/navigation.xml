@@ -39,5 +39,25 @@
             app:argType="string"
             app:nullable="true"
             android:defaultValue="null" />
+        <action
+            android:id="@+id/action_contactCardList_to_infoDisplay"
+            app:destination="@id/infoDisplay" />
+    </fragment>
+    <fragment
+        android:id="@+id/infoDisplay"
+        android:name="com.example.phonebook.InfoDisplay"
+        android:label="InfoDisplay" >
+        <argument
+            android:name="name"
+            app:argType="string" />
+        <argument
+            android:name="phone"
+            app:argType="string" />
+        <argument
+            android:name="email"
+            app:argType="string" />
+        <argument
+            android:name="image"
+            app:argType="string" />
     </fragment>
 </navigation>

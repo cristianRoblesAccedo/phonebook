@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.phonebook.databinding.FragmentContactCardListBinding
 
@@ -30,6 +31,12 @@ class ContactCardList : Fragment() {
             false)
         val adapter = CardAdapter(cardList)
         val args = ContactCardListArgs.fromBundle(requireArguments())
+
+        adapter.onItemClick = { contact ->
+            findNavController().navigate(ContactCardListDirections.actionContactCardListToInfoDisplay(
+                contact.name, contact.phone, contact.email, contact.image
+            ))
+        }
 
         // Layout manager and adapter are synced to RecyclerView
         binding.contactCardList.layoutManager = LinearLayoutManager(context)

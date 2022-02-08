@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
 class CardAdapter(val card: MutableList<Card>): RecyclerView.Adapter<CardAdapter.CardHolder>() {
+    var onItemClick: ((Card) -> Unit)? = null
 
     inner class CardHolder(val view: View): RecyclerView.ViewHolder(view) {
         val nameTv: TextView = view.findViewById(R.id.name_tv)
@@ -16,6 +17,9 @@ class CardAdapter(val card: MutableList<Card>): RecyclerView.Adapter<CardAdapter
         val imageIv: ImageView = view.findViewById(R.id.image_iv)
 
         fun render(item: Card) {
+            view.setOnClickListener {
+                onItemClick?.invoke(item)
+            }
             nameTv.text = item.name
             emailTv.text = item.email
             phoneTv.text = item.phone
