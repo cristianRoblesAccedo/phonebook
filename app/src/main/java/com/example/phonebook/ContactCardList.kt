@@ -46,7 +46,9 @@ class ContactCardList : Fragment() {
         }
         // If a new user is created then we create a new element in cardList
         if (!args.name.isNullOrEmpty()) {
-            if (cardList.size == 0 || cardList[cardList.size - 1] != Card(args.name!!, args.phone!!, args.email!!))
+            if (cardList.size == 0)
+                cardList.add(Card(args.name!!, args.phone!!, args.email!!, args.image!!))
+            else if (cardList[cardList.size - 1] != Card(args.name!!, args.phone!!, args.email!!))
                 cardList.add(Card(args.name!!, args.phone!!, args.email!!, args.image!!))
         }
         // Displays msg on screen if cardList is empty
