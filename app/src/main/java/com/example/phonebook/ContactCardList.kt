@@ -31,16 +31,21 @@ class ContactCardList : Fragment() {
         val adapter = CardAdapter(cardList)
         val args = ContactCardListArgs.fromBundle(requireArguments())
 
+        // Layout manager and adapter are synced to RecyclerView
         binding.contactCardList.layoutManager = LinearLayoutManager(context)
         binding.contactCardList.adapter = adapter
+        // Navigates to AddContact fragment when button is pressed
         binding.addContactButton.setOnClickListener{ view: View ->
             view.findNavController().navigate(ContactCardListDirections.actionContactCardListToAddContact())
         }
+        // If a new user is created then we create a new element in cardList
         args.name.let {
             if (!it.isNullOrEmpty() && initList)
                 cardList.add(Card(it, args.phone!!, args.email!!, args.image!!))
             initList = true
         }
+        // Displays msg on screen if cardList is empty
+        binding.emptyListTv.visibility = if (cardList.size == 0) View.VISIBLE else View.GONE
 
         return binding.root
     }

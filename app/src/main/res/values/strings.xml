@@ -2,8 +2,9 @@
     <string name="app_name">PhoneBook</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="hint_phone">Teléfono:</string>
-    <string name="hint_email">Email:</string>
-    <string name="hint_name">Nombre:</string>
-    <string name="button_add">Agregar</string>
+    <string name="hint_phone">Phone</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_name">Name</string>
+    <string name="button_add">Add</string>
+    <string name="empty_list_msg">Contact list is empty, try adding a new contact first!</string>
 </resources>

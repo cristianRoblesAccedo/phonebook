@@ -33,7 +33,7 @@ class AddContact : Fragment() {
     fun validateInput(view: View) {
         val nameLength = Pair(3, 50)
         val namePattern = """.{3,50}""".toRegex()
-        val emailPattern = """([\w\d_]+\.)+[\w\d_]+@[\w\d_]+(\.[\w\d]+)+""".toRegex()
+        val emailPattern = """([\w\d_]+\.)?+[\w\d_]+@[\w\d_]+(\.[\w\d]+)+""".toRegex()
         val phonePattern = """(\(\+?\d{1,3}\)? ?)?((\(?\d{3} ?\)){2}\d{2} ?\d{2}|\(?\d{2}\)? ?\(?\d{4}\)? ?\(?\d{4}\)?)""".toRegex()
         var nameValid = false
         var emailValid = false
