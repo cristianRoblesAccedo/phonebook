@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.phonebook.databinding.FragmentContactCardListBinding
 
 val cardList = mutableListOf<Card>()
-var initList = false
 
 class ContactCardList : Fragment() {
 
@@ -46,14 +45,15 @@ class ContactCardList : Fragment() {
             view.findNavController().navigate(ContactCardListDirections.actionContactCardListToAddContact())
         }
         // If a new user is created then we create a new element in cardList
-        args.name.let {
-            if (!it.isNullOrEmpty() && initList)
-                cardList.add(Card(it, args.phone!!, args.email!!, args.image!!))
-            initList = true
+        if (!args.name.isNullOrEmpty()) {
+            if (cardList.size == 0 || cardList[cardList.size - 1] != Card(args.name!!, args.phone!!, args.email!!))
+                cardList.add(Card(args.name!!, args.phone!!, args.email!!, args.image!!))
         }
         // Displays msg on screen if cardList is empty
         binding.emptyListTv.visibility = if (cardList.size == 0) View.VISIBLE else View.GONE
 
         return binding.root
     }
+
+    private fun getCardDataCompacted(card: Card) = card.name + card.email + card.phone
 }
