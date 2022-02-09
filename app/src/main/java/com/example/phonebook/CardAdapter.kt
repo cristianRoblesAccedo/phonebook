@@ -1,5 +1,6 @@
 package com.example.phonebook
 
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,6 +24,7 @@ class CardAdapter(val card: MutableList<Card>): RecyclerView.Adapter<CardAdapter
             nameTv.text = item.name
             emailTv.text = item.email
             phoneTv.text = item.phone
+            imageIv.setImageURI(Uri.parse(item.image))
         }
     }
 

@@ -57,6 +57,4 @@ class ContactCardList : Fragment() {
 
         return binding.root
     }
-
-    private fun getCardDataCompacted(card: Card) = card.name + card.email + card.phone
 }

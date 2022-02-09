@@ -1,5 +1,8 @@
 package com.example.phonebook
 
+import android.app.Activity
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -7,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.addCallback
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
@@ -14,6 +18,7 @@ import com.example.phonebook.databinding.FragmentAddContactBinding
 
 class AddContact : Fragment() {
     private lateinit var binding: FragmentAddContactBinding
+    private var imageUri = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,9 +32,19 @@ class AddContact : Fragment() {
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
             findNavController().navigate(AddContactDirections.actionAddContactToContactCardList(null, null, null, null))
         }
+        // Establishes a contract for getting an image from storage
+        val getContent = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+            uri?.let {
+                imageUri = it.toString()
+                binding.addImageIv.setImageURI(it)
+            }
+        }
+
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_contact, container, false)
 
+        // binding listeners
+        binding.addImageIv.setOnClickListener { getContent.launch("image/*") }
         binding.addBtn.setOnClickListener{ validateInput(it) }
         return binding.root
     }
@@ -58,8 +73,6 @@ class AddContact : Fragment() {
         else
             phoneValid = true
 
-
-
         // If all fields are correct
         if (nameValid && emailValid && phoneValid) {
             // Returns back to contact list
@@ -67,7 +80,7 @@ class AddContact : Fragment() {
                 binding.addNameEt.text.toString(),
                 binding.addPhoneEt.text.toString(),
                 binding.addEmailEt.text.toString(),
-                ""
+                imageUri
             ))
         }
     }
