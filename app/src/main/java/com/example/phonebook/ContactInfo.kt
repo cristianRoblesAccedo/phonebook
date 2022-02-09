@@ -6,12 +6,11 @@ import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.databinding.DataBindingUtil
-import com.example.phonebook.databinding.FragmentInfoDisplayBinding
-import java.io.InputStream
+import com.example.phonebook.databinding.FragmentContactInfoBinding
 
-class InfoDisplay : Fragment() {
-    private lateinit var binding: FragmentInfoDisplayBinding
-    private val displayData = Card("", "", "", "")
+class ContactInfo : Fragment() {
+    private lateinit var binding: FragmentContactInfoBinding
+    private val displayData = Contact("", "", "", "")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,13 +20,13 @@ class InfoDisplay : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val args = InfoDisplayArgs.fromBundle(requireArguments())
+        val args = ContactInfoArgs.fromBundle(requireArguments())
         displayData.phone = args.phone
         displayData.email = args.email
         displayData.name = args.name
 
         // Inflate the layout for this fragment
-        binding =  DataBindingUtil.inflate(inflater, R.layout.fragment_info_display, container, false)
+        binding =  DataBindingUtil.inflate(inflater, R.layout.fragment_contact_info, container, false)
         // Variable for displaying data binding
         binding.displayData = displayData
         // Setting image URI

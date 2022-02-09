@@ -1,6 +1,6 @@
 package com.example.phonebook
 
-data class Card(
+data class Contact(
     var name: String = "",
     var phone: String = "",
     var email: String = "",

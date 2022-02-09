@@ -7,8 +7,8 @@
 
     <data>
         <variable
-            name="card"
-            type="com.example.phonebook.Card"/>
+            name="contact"
+            type="com.example.phonebook.Contact"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -36,7 +36,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            android:text="@={card.name}"
+            android:text="@={contact.name}"
             app:layout_constraintBottom_toTopOf="@+id/email_tv"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/image_iv"
@@ -49,7 +49,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
-            android:text="@={card.email}"
+            android:text="@={contact.email}"
             app:layout_constraintBottom_toTopOf="@+id/phone_tv"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/image_iv"
@@ -62,7 +62,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
-            android:text="@={card.phone}"
+            android:text="@={contact.phone}"
             app:layout_constraintBottom_toBottomOf="@+id/image_iv"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/image_iv"

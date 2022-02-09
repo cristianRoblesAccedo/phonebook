@@ -45,7 +45,7 @@
     </fragment>
     <fragment
         android:id="@+id/infoDisplay"
-        android:name="com.example.phonebook.InfoDisplay"
+        android:name="com.example.phonebook.ContactInfo"
         android:label="InfoDisplay" >
         <argument
             android:name="name"

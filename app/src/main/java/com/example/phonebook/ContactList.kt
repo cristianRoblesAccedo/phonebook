@@ -11,10 +11,10 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.phonebook.databinding.FragmentContactCardListBinding
+import com.example.phonebook.databinding.FragmentContactListBinding
 import com.google.android.material.snackbar.Snackbar
 
-val cardList = mutableListOf<Card>()
+val cardList = mutableListOf<Contact>()
 
 class ContactCardList : Fragment() {
 
@@ -27,11 +27,11 @@ class ContactCardList : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val binding = DataBindingUtil.inflate<FragmentContactCardListBinding>(inflater,
-            R.layout.fragment_contact_card_list,
+        val binding = DataBindingUtil.inflate<FragmentContactListBinding>(inflater,
+            R.layout.fragment_contact_list,
             container,
             false)
-        val adapter = CardAdapter(requireContext(), cardList)
+        val adapter = ContactListAdapter(requireContext(), cardList)
         val args = ContactCardListArgs.fromBundle(requireArguments())
 
         adapter.onItemClick = { contact ->
@@ -67,7 +67,7 @@ class ContactCardList : Fragment() {
         }
         // If a new user is created then we create a new element in cardList
         if (!args.name.isNullOrEmpty()) {
-            val tmpCard = Card(args.name!!, args.phone!!, args.email!!, args.image!!)
+            val tmpCard = Contact(args.name!!, args.phone!!, args.email!!, args.image!!)
             if (cardList.size == 0)
                 cardList.add(tmpCard)
             else if (cardList[cardList.size - 1] != tmpCard)

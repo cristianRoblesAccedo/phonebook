@@ -7,11 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 
-class CardAdapter(val context: Context, val card: MutableList<Card>): RecyclerView.Adapter<CardAdapter.CardHolder>() {
-    var onItemClick: ((Card) -> Unit)? = null
+class ContactListAdapter(val context: Context, val contact: MutableList<Contact>): RecyclerView.Adapter<ContactListAdapter.CardHolder>() {
+    var onItemClick: ((Contact) -> Unit)? = null
 
     inner class CardHolder(val view: View): RecyclerView.ViewHolder(view) {
         val nameTv: TextView = view.findViewById(R.id.name_tv)
@@ -19,7 +18,7 @@ class CardAdapter(val context: Context, val card: MutableList<Card>): RecyclerVi
         val phoneTv: TextView = view.findViewById(R.id.phone_tv)
         val imageIv: ImageView = view.findViewById(R.id.image_iv)
 
-        fun render(item: Card) {
+        fun render(item: Contact) {
             view.setOnClickListener {
                 onItemClick?.invoke(item)
             }
@@ -33,26 +32,26 @@ class CardAdapter(val context: Context, val card: MutableList<Card>): RecyclerVi
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        return CardHolder(layoutInflater.inflate(R.layout.fragment_contact_card_item, parent, false))
+        return CardHolder(layoutInflater.inflate(R.layout.fragment_contact_list_item, parent, false))
     }
 
     // Renders the <position> item in the list
     override fun onBindViewHolder(holder: CardHolder, position: Int) {
-        holder.render(card[position])
+        holder.render(contact[position])
     }
 
     // Return the size of the viewHolder
-    override fun getItemCount(): Int = card.size
+    override fun getItemCount(): Int = contact.size
 
     fun deleteItem(i: Int) {
-        card.removeAt(i)
+        contact.removeAt(i)
         notifyDataSetChanged()
     }
 
-    fun addItem(i: Int, element: Card) {
-        card.add(i, element)
+    fun addItem(i: Int, element: Contact) {
+        contact.add(i, element)
         notifyDataSetChanged()
     }
 
-    fun getItem(i: Int) = card[i]
+    fun getItem(i: Int) = contact[i]
 }
