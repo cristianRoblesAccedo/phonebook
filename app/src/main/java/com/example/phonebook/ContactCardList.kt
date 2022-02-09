@@ -31,7 +31,7 @@ class ContactCardList : Fragment() {
             R.layout.fragment_contact_card_list,
             container,
             false)
-        val adapter = CardAdapter(cardList)
+        val adapter = CardAdapter(requireContext(), cardList)
         val args = ContactCardListArgs.fromBundle(requireArguments())
 
         adapter.onItemClick = { contact ->

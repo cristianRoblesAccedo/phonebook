@@ -7,6 +7,7 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.databinding.DataBindingUtil
 import com.example.phonebook.databinding.FragmentInfoDisplayBinding
+import java.io.InputStream
 
 class InfoDisplay : Fragment() {
     private lateinit var binding: FragmentInfoDisplayBinding
@@ -31,8 +32,8 @@ class InfoDisplay : Fragment() {
         binding.displayData = displayData
         // Setting image URI
         if (args.image.isNotEmpty()) {
-            println("uri: ${args.image}")
-            binding.imageIv.setImageURI(Uri.parse(args.image))
+            val cropImg = BitmapCropper.createBitmap(context, Uri.parse(args.image))
+            binding.imageIv.setImageBitmap(cropImg)
         }
 
         binding.emailIv.setOnClickListener { _ ->

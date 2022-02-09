@@ -1,14 +1,16 @@
 package com.example.phonebook
 
+import android.content.Context
 import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 
-class CardAdapter(val card: MutableList<Card>): RecyclerView.Adapter<CardAdapter.CardHolder>() {
+class CardAdapter(val context: Context, val card: MutableList<Card>): RecyclerView.Adapter<CardAdapter.CardHolder>() {
     var onItemClick: ((Card) -> Unit)? = null
 
     inner class CardHolder(val view: View): RecyclerView.ViewHolder(view) {
@@ -24,7 +26,8 @@ class CardAdapter(val card: MutableList<Card>): RecyclerView.Adapter<CardAdapter
             nameTv.text = item.name
             emailTv.text = item.email
             phoneTv.text = item.phone
-            imageIv.setImageURI(Uri.parse(item.image))
+            val imageCrop = BitmapCropper.createBitmap(context, Uri.parse(item.image))
+            imageIv.setImageBitmap(imageCrop)
         }
     }
 

@@ -2,6 +2,8 @@ package com.example.phonebook
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -15,10 +17,12 @@ import androidx.databinding.DataBindingUtil
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.example.phonebook.databinding.FragmentAddContactBinding
+import kotlin.math.abs
 
 class AddContact : Fragment() {
     private lateinit var binding: FragmentAddContactBinding
     private var imageUri = ""
+    private val maxSizeBitmap = 200
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,33 +32,31 @@ class AddContact : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        // Inflate the layout for this fragment
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_contact, container, false)
+
         // Sets a custom behaviour for the back button so that contacts in contactList are not duplicated
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
             findNavController().navigate(AddContactDirections.actionAddContactToContactCardList(null, null, null, null))
         }
 
-        // Inflate the layout for this fragment
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_contact, container, false)
-
         // Establishes a contract for getting an image from storage
-        val getContent = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+        val getImageContract = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
             uri?.let {
+                val cropImg = BitmapCropper.createBitmap(context, it)
                 imageUri = it.toString()
-                binding.addImageIv.setImageURI(it)
+                binding.addImageIv.setImageBitmap(cropImg)
             }
         }
 
         // Recovers state
-        savedInstanceState?.getString("name")?.let {
-            println("Recovering data: $it")
-            binding.addNameEt.setText(it)
-        }
+        savedInstanceState?.getString("name")?.let { binding.addNameEt.setText(it) }
         savedInstanceState?.getString("phone")?.let { binding.addPhoneEt.setText(it) }
         savedInstanceState?.getString("email")?.let { binding.addEmailEt.setText(it) }
         savedInstanceState?.getString("image_uri")?.let { imageUri = it }
 
         // binding listeners
-        binding.addImageIv.setOnClickListener { getContent.launch("image/*") }
+        binding.addImageIv.setOnClickListener { getImageContract.launch("image/*") }
         binding.addBtn.setOnClickListener{ validateInput(it) }
         return binding.root
     }
