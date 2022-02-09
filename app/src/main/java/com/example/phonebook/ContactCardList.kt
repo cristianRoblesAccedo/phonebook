@@ -8,7 +8,9 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.phonebook.databinding.FragmentContactCardListBinding
 
 val cardList = mutableListOf<Card>()
@@ -37,9 +39,20 @@ class ContactCardList : Fragment() {
             ))
         }
 
+        //
+        val swipeGesture = object : SwipeToRemoveGesture() {
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                super.onSwiped(viewHolder, direction)
+                adapter.deleteItem(viewHolder.absoluteAdapterPosition)
+            }
+        }
+        val touchHelper = ItemTouchHelper(swipeGesture)
+        touchHelper.attachToRecyclerView(binding.contactCardList)
+
         // Layout manager and adapter are synced to RecyclerView
         binding.contactCardList.layoutManager = LinearLayoutManager(context)
         binding.contactCardList.adapter = adapter
+
         // Navigates to AddContact fragment when button is pressed
         binding.addContactButton.setOnClickListener{ view: View ->
             view.findNavController().navigate(ContactCardListDirections.actionContactCardListToAddContact())

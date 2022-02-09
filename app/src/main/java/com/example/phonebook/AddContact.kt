@@ -32,6 +32,10 @@ class AddContact : Fragment() {
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
             findNavController().navigate(AddContactDirections.actionAddContactToContactCardList(null, null, null, null))
         }
+
+        // Inflate the layout for this fragment
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_contact, container, false)
+
         // Establishes a contract for getting an image from storage
         val getContent = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
             uri?.let {
@@ -40,13 +44,29 @@ class AddContact : Fragment() {
             }
         }
 
-        // Inflate the layout for this fragment
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_contact, container, false)
+        // Recovers state
+        savedInstanceState?.getString("name")?.let {
+            println("Recovering data: $it")
+            binding.addNameEt.setText(it)
+        }
+        savedInstanceState?.getString("phone")?.let { binding.addPhoneEt.setText(it) }
+        savedInstanceState?.getString("email")?.let { binding.addEmailEt.setText(it) }
+        savedInstanceState?.getString("image_uri")?.let { imageUri = it }
 
         // binding listeners
         binding.addImageIv.setOnClickListener { getContent.launch("image/*") }
         binding.addBtn.setOnClickListener{ validateInput(it) }
         return binding.root
+    }
+
+    // Saves state
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        println("Saving state...")
+        outState.putString("name", binding.addNameEt.text.toString())
+        outState.putString("phone", binding.addPhoneEt.text.toString())
+        outState.putString("email", binding.addEmailEt.text.toString())
+        outState.putString("image_uri", imageUri)
     }
 
     fun validateInput(view: View) {

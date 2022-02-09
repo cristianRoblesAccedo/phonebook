@@ -40,4 +40,13 @@ class CardAdapter(val card: MutableList<Card>): RecyclerView.Adapter<CardAdapter
 
     // Return the size of the viewHolder
     override fun getItemCount(): Int = card.size
+
+    fun deleteItem(i: Int) {
+        card.removeAt(i)
+        notifyDataSetChanged()
+    }
+
+    fun addItem(i: Int) {
+
+    }
 }
