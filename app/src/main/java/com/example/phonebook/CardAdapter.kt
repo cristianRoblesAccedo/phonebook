@@ -46,7 +46,10 @@ class CardAdapter(val card: MutableList<Card>): RecyclerView.Adapter<CardAdapter
         notifyDataSetChanged()
     }
 
-    fun addItem(i: Int) {
-
+    fun addItem(i: Int, element: Card) {
+        card.add(i, element)
+        notifyDataSetChanged()
     }
+
+    fun getItem(i: Int) = card[i]
 }

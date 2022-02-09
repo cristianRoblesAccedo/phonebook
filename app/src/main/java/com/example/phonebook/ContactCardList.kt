@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.phonebook.databinding.FragmentContactCardListBinding
+import com.google.android.material.snackbar.Snackbar
 
 val cardList = mutableListOf<Card>()
 
@@ -43,7 +44,14 @@ class ContactCardList : Fragment() {
         val swipeGesture = object : SwipeToRemoveGesture() {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 super.onSwiped(viewHolder, direction)
+                val tmpContact = adapter.getItem(viewHolder.absoluteAdapterPosition)
                 adapter.deleteItem(viewHolder.absoluteAdapterPosition)
+                println("viewHolder position: ${viewHolder.absoluteAdapterPosition}")
+                Snackbar.make(binding.contactCardList, "Contact deleted", Snackbar.LENGTH_LONG)
+                    .setAction("Undo") { _ ->
+                        adapter.addItem(viewHolder.absoluteAdapterPosition + 1, tmpContact)
+                    }
+                    .show()
             }
         }
         val touchHelper = ItemTouchHelper(swipeGesture)
