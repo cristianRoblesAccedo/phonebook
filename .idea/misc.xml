@@ -24,6 +24,7 @@
         <entry key="app/src/main/res/layout/fragment_contact_info.xml" value="0.2623748779296875" />
         <entry key="app/src/main/res/layout/fragment_contact_item.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_contact_list.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_contact_list_item.xml" value="0.28229166666666666" />
         <entry key="app/src/main/res/layout/fragment_floating_button.xml" value="0.21467391304347827" />
         <entry key="app/src/main/res/layout/fragment_info_display.xml" value="0.19839679358717435" />
         <entry key="app/src/main/res/menu/info_display_menu.xml" value="0.28229166666666666" />

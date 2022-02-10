@@ -25,8 +25,10 @@ class ContactListAdapter(val context: Context, val contact: MutableList<Contact>
             nameTv.text = item.name
             emailTv.text = item.email
             phoneTv.text = item.phone
-            val imageCrop = BitmapCropper.createBitmap(context, Uri.parse(item.image))
-            imageIv.setImageBitmap(imageCrop)
+            if (item.image.isNotEmpty()) {
+                val imageCrop = BitmapCropper.createBitmap(context, Uri.parse(item.image))
+                imageIv.setImageBitmap(imageCrop)
+            }
         }
     }
 
