@@ -15,7 +15,7 @@
         <entry key="app/src/main/res/drawable/ic_sample_background.xml" value="0.155" />
         <entry key="app/src/main/res/drawable/img_sample_image.xml" value="0.155" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/fragment_add_contact.xml" value="0.2788238525390625" />
+        <entry key="app/src/main/res/layout/fragment_add_contact.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_add_contact_button.xml" value="0.21467391304347827" />
         <entry key="app/src/main/res/layout/fragment_blank.xml" value="0.21467391304347827" />
         <entry key="app/src/main/res/layout/fragment_contact_card.xml" value="0.2990177983823028" />

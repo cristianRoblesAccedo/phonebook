@@ -10,7 +10,9 @@
         android:label="AddContact" >
         <action
             android:id="@+id/action_addContact_to_contactCardList"
-            app:destination="@id/contactCardList" />
+            app:destination="@id/contactCardList"
+            app:popUpTo="@id/contactCardList"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/contactCardList"
@@ -18,7 +20,9 @@
         android:label="ContactCardList" >
         <action
             android:id="@+id/action_contactCardList_to_addContact"
-            app:destination="@id/addContact" />
+            app:destination="@id/addContact"
+            app:popUpTo="@id/contactCardList"
+            app:popUpToInclusive="false" />
         <argument
             android:name="name"
             app:argType="string"
@@ -41,7 +45,9 @@
             android:defaultValue="@null" />
         <action
             android:id="@+id/action_contactCardList_to_infoDisplay"
-            app:destination="@id/infoDisplay" />
+            app:destination="@id/infoDisplay"
+            app:popUpTo="@id/contactCardList"
+            app:popUpToInclusive="false" />
     </fragment>
     <fragment
         android:id="@+id/infoDisplay"

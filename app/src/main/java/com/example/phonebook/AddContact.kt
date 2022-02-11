@@ -17,12 +17,13 @@ import androidx.databinding.DataBindingUtil
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.example.phonebook.databinding.FragmentAddContactBinding
+import com.vicmikhailau.maskededittext.MaskedFormatter
 import kotlin.math.abs
 
 class AddContact : Fragment() {
     private lateinit var binding: FragmentAddContactBinding
     private var imageUri = ""
-    private val maxSizeBitmap = 200
+    private val phoneLenght = 10
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,11 +35,6 @@ class AddContact : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_contact, container, false)
-
-        // Sets a custom behaviour for the back button so that contacts in contactList are not duplicated
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
-            findNavController().navigate(AddContactDirections.actionAddContactToContactCardList(null, null, null, null))
-        }
 
         // Establishes a contract for getting an image from storage
         val getImageContract = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
@@ -75,7 +71,6 @@ class AddContact : Fragment() {
         val nameLength = Pair(3, 50)
         val namePattern = """.{3,50}""".toRegex()
         val emailPattern = """([\w\d_]+\.)?+[\w\d_]+@[\w\d_]+(\.[\w\d]+)+""".toRegex()
-        val phonePattern = """(\(\+?\d{1,3}\)? ?)?((\(?\d{3} ?\)){2}\d{2} ?\d{2}|\(?\d{2}\)? ?\(?\d{4}\)? ?\(?\d{4}\)?)""".toRegex()
         var nameValid = false
         var emailValid = false
         var phoneValid = false
@@ -90,10 +85,16 @@ class AddContact : Fragment() {
         else
             emailValid = true
 
-        if (!phonePattern.matches(binding.addPhoneEt.text))
+        if (binding.addPhoneEt.unMaskedText?.length != phoneLenght)
             binding.addPhoneEt.error = "Phone is not valid"
-        else
+        else {
             phoneValid = true
+            var phone = binding.addPhoneEt.text.toString()
+            if (phone[phone.length - 1] != ')') {
+                phone += ")"
+                binding.addPhoneEt.setText(phone)
+            }
+        }
 
         // If all fields are correct
         if (nameValid && emailValid && phoneValid) {

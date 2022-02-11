@@ -7,4 +7,5 @@
     <string name="hint_name">Name</string>
     <string name="button_add">Add</string>
     <string name="empty_list_msg">Contact list is empty, try adding a new contact first!</string>
+    <string name="phone_ext">+52 </string>
 </resources>

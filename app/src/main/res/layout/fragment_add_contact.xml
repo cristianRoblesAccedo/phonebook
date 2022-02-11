@@ -36,7 +36,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/add_image_iv" />
 
-        <EditText
+        <com.vicmikhailau.maskededittext.MaskedEditText
             android:id="@+id/add_phone_et"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -49,7 +49,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/add_email_et" />
+            app:layout_constraintTop_toBottomOf="@+id/add_email_et"
+            app:mask="+52 (###) (###) (####)" />
 
         <EditText
             android:id="@+id/add_email_et"
