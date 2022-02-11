@@ -17,6 +17,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.example.phonebook.databinding.FragmentAddContactBinding
+import com.google.android.material.textfield.TextInputLayout
 import com.vicmikhailau.maskededittext.MaskedFormatter
 import kotlin.math.abs
 
@@ -75,20 +76,31 @@ class AddContact : Fragment() {
         var emailValid = false
         var phoneValid = false
 
-        if (!namePattern.matches(binding.addNameEt.text))
-            binding.addNameEt.error = "name must be between ${nameLength.first} and ${nameLength.second} characters long"
-        else
+        if (!namePattern.matches(binding.addNameEt.text.toString())) {
+            binding.addNameTil.error = "name must be between ${nameLength.first} and ${nameLength.second} characters long"
+            binding.addNameTil.isErrorEnabled = true
+        }
+        else {
             nameValid = true
+            binding.addNameTil.isErrorEnabled = false
+        }
 
-        if (!emailPattern.matches(binding.addEmailEt.text))
-            binding.addEmailEt.error = "Email is not valid"
-        else
+        if (!emailPattern.matches(binding.addEmailEt.text.toString())) {
+            binding.addEmailTil.error = "Email is not valid"
+            binding.addEmailTil.isErrorEnabled = true
+        }
+        else {
             emailValid = true
+            binding.addEmailTil.isErrorEnabled = false
+        }
 
-        if (binding.addPhoneEt.unMaskedText?.length != phoneLenght)
-            binding.addPhoneEt.error = "Phone is not valid"
+        if (binding.addPhoneEt.unMaskedText?.length != phoneLenght) {
+            binding.addPhoneTil.error = "Phone is not valid"
+            binding.addPhoneTil.isErrorEnabled = true
+        }
         else {
             phoneValid = true
+            binding.addPhoneTil.isErrorEnabled = false
             var phone = binding.addPhoneEt.text.toString()
             if (phone[phone.length - 1] != ')') {
                 phone += ")"
