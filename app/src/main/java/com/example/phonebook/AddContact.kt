@@ -1,7 +1,9 @@
 package com.example.phonebook
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
@@ -21,9 +23,13 @@ import com.google.android.material.textfield.TextInputLayout
 import com.vicmikhailau.maskededittext.MaskedFormatter
 import kotlin.math.abs
 
+// Bitmap that stores a selected cropped image
+private var croppedImg: Bitmap? = null
+
 class AddContact : Fragment() {
-    private lateinit var binding: FragmentAddContactBinding
     private var imageUri = ""
+    private var dataSubmited = false
+    private lateinit var binding: FragmentAddContactBinding
     private val phoneLenght = 10
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,23 +40,21 @@ class AddContact : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_contact, container, false)
+
+        // Renders user image everytime the fragment gets rendered
+        croppedImg?.let {
+            binding.addImageIv.setImageBitmap(it)
+        }
 
         // Establishes a contract for getting an image from storage
         val getImageContract = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
             uri?.let {
-                val cropImg = BitmapCropper.createBitmap(context, it)
-                imageUri = it.toString()
-                binding.addImageIv.setImageBitmap(cropImg)
+                getCroppedBitmap(it)
             }
         }
-
-        // Recovers state
-        savedInstanceState?.getString("name")?.let { binding.addNameEt.setText(it) }
-        savedInstanceState?.getString("phone")?.let { binding.addPhoneEt.setText(it) }
-        savedInstanceState?.getString("email")?.let { binding.addEmailEt.setText(it) }
-        savedInstanceState?.getString("image_uri")?.let { imageUri = it }
 
         // binding listeners
         binding.addImageIv.setOnClickListener { getImageContract.launch("image/*") }
@@ -58,17 +62,63 @@ class AddContact : Fragment() {
         return binding.root
     }
 
-    // Saves state
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        println("Saving state...")
-        outState.putString("name", binding.addNameEt.text.toString())
-        outState.putString("phone", binding.addPhoneEt.text.toString())
-        outState.putString("email", binding.addEmailEt.text.toString())
-        outState.putString("image_uri", imageUri)
+    override fun onStop() {
+        super.onStop()
+        println("data submited: $dataSubmited")
+        if (!dataSubmited)
+            saveState()
     }
 
-    fun validateInput(view: View) {
+    override fun onResume() {
+        super.onResume()
+        recoverState()
+        try {
+            if (imageUri.isNotEmpty()) {
+                getCroppedBitmap(Uri.parse(imageUri))
+                croppedImg.let {
+                    binding.addImageIv.setImageBitmap(it)
+                }
+            }
+        } catch (e: SecurityException) {
+            imageUri = ""
+        }
+    }
+
+    private fun getCroppedBitmap(uri: Uri) {
+        croppedImg = BitmapCropper.createBitmap(context, uri)
+        imageUri = uri.toString()
+        binding.addImageIv.setImageBitmap(croppedImg)
+    }
+
+    private fun saveState() {
+        val sharedPref = requireActivity().getPreferences(Context.MODE_PRIVATE)
+        with (sharedPref?.edit()) {
+            this?.putString("name", binding.addNameEt.text.toString())
+            this?.putString("phone", binding.addPhoneEt.text.toString())
+            this?.putString("email", binding.addEmailEt.text.toString())
+            if (imageUri.isNotEmpty())
+                this?.putString("image_uri", imageUri)
+            this?.apply()
+        }
+    }
+
+    private fun recoverState() {
+        val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE)
+        val name = sharedPref?.getString("name", null)
+        val phone = sharedPref?.getString("phone", null)
+        val email = sharedPref?.getString("email", null)
+        val image = sharedPref?.getString("image_uri", null)
+        if (!name.isNullOrEmpty())
+            binding.addNameEt.setText(name)
+        if (!phone.isNullOrEmpty())
+            binding.addPhoneEt.setText(phone)
+        if (!email.isNullOrEmpty())
+            binding.addEmailEt.setText(email)
+        if (!image.isNullOrEmpty() && imageUri.isEmpty())
+            imageUri = image
+    }
+
+    private fun validateInput(view: View) {
         val nameLength = Pair(3, 50)
         val namePattern = """.{3,50}""".toRegex()
         val emailPattern = """([\w\d_]+\.)?+[\w\d_]+@[\w\d_]+(\.[\w\d]+)+""".toRegex()
@@ -110,6 +160,11 @@ class AddContact : Fragment() {
 
         // If all fields are correct
         if (nameValid && emailValid && phoneValid) {
+            // Removes temporal data from shared preferences
+            val sharedPref = requireActivity().getPreferences(Context.MODE_PRIVATE)
+            sharedPref.edit().clear().apply()
+            dataSubmited = true
+            croppedImg = null
             // Returns back to contact list
             findNavController().navigate(AddContactDirections.actionAddContactToContactCardList(
                 binding.addNameEt.text.toString(),
