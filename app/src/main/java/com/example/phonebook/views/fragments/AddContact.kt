@@ -1,36 +1,32 @@
-package com.example.phonebook
+package com.example.phonebook.views.fragments
 
-import android.app.Activity
 import android.content.Context
-import android.content.Intent
-import android.content.SharedPreferences
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.activity.addCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.databinding.DataBindingUtil
-import androidx.navigation.findNavController
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.navGraphViewModels
+import com.example.phonebook.R
 import com.example.phonebook.databinding.FragmentAddContactBinding
-import com.google.android.material.textfield.TextInputLayout
-import com.vicmikhailau.maskededittext.MaskedFormatter
-import kotlin.math.abs
+import com.example.phonebook.models.BitmapCropper
+import com.example.phonebook.models.Contact
+import com.example.phonebook.modelviews.ContactViewModel
 
 // Bitmap that stores a selected cropped image
 private var croppedImg: Bitmap? = null
 
 class AddContact : Fragment() {
     private var imageUri = ""
-    private var dataSubmited = false
+    private var dataSubmitted = false
     private lateinit var binding: FragmentAddContactBinding
-    private val phoneLenght = 10
+    private val phoneLength = 10
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,6 +39,9 @@ class AddContact : Fragment() {
 
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_contact, container, false)
+
+        // Gets ContactViewModel instance
+        val contactViewModel: ContactViewModel by navGraphViewModels(R.id.nav_host_fragment)
 
         // Renders user image everytime the fragment gets rendered
         croppedImg?.let {
@@ -58,14 +57,13 @@ class AddContact : Fragment() {
 
         // binding listeners
         binding.addImageIv.setOnClickListener { getImageContract.launch("image/*") }
-        binding.addBtn.setOnClickListener{ validateInput(it) }
+        binding.addBtn.setOnClickListener{ validateInput(contactViewModel) }
         return binding.root
     }
 
     override fun onStop() {
         super.onStop()
-        println("data submited: $dataSubmited")
-        if (!dataSubmited)
+        if (!dataSubmitted)
             saveState()
     }
 
@@ -118,7 +116,7 @@ class AddContact : Fragment() {
             imageUri = image
     }
 
-    private fun validateInput(view: View) {
+    private fun validateInput(contactViewModel: ContactViewModel) {
         val nameLength = Pair(3, 50)
         val namePattern = """.{3,50}""".toRegex()
         val emailPattern = """([\w\d_]+\.)?+[\w\d_]+@[\w\d_]+(\.[\w\d]+)+""".toRegex()
@@ -144,7 +142,7 @@ class AddContact : Fragment() {
             binding.addEmailTil.isErrorEnabled = false
         }
 
-        if (binding.addPhoneEt.unMaskedText?.length != phoneLenght) {
+        if (binding.addPhoneEt.unMaskedText?.length != phoneLength) {
             binding.addPhoneTil.error = "Phone is not valid"
             binding.addPhoneTil.isErrorEnabled = true
         }
@@ -163,15 +161,16 @@ class AddContact : Fragment() {
             // Removes temporal data from shared preferences
             val sharedPref = requireActivity().getPreferences(Context.MODE_PRIVATE)
             sharedPref.edit().clear().apply()
-            dataSubmited = true
+            dataSubmitted = true
             croppedImg = null
-            // Returns back to contact list
-            findNavController().navigate(AddContactDirections.actionAddContactToContactCardList(
+            contactViewModel.addContact(Contact(
                 binding.addNameEt.text.toString(),
                 binding.addPhoneEt.text.toString(),
                 binding.addEmailEt.text.toString(),
                 imageUri
             ))
+            // Returns back to contact list
+            findNavController().navigate(R.id.action_addContact_to_contactCardList)
         }
     }
 }

@@ -1,10 +1,9 @@
-package com.example.phonebook
+package com.example.phonebook.views
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import androidx.databinding.DataBindingUtil
-import androidx.navigation.findNavController
+import com.example.phonebook.R
 import com.example.phonebook.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {

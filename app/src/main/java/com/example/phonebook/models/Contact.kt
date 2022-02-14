@@ -1,4 +1,4 @@
-package com.example.phonebook
+package com.example.phonebook.models
 
 data class Contact(
     var name: String = "",

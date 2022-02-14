@@ -1,4 +1,4 @@
-package com.example.phonebook
+package com.example.phonebook.models
 
 import android.content.Context
 import android.net.Uri
@@ -8,19 +8,21 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.phonebook.R
 
-class ContactListAdapter(val context: Context, val contact: MutableList<Contact>): RecyclerView.Adapter<ContactListAdapter.CardHolder>() {
-    var onItemClick: ((Contact) -> Unit)? = null
+class ContactListAdapter(val context: Context): RecyclerView.Adapter<ContactListAdapter.CardHolder>() {
+    var onItemClick: ((Contact, CardHolder) -> Unit)? = null
+    var contact = mutableListOf<Contact>()
 
     inner class CardHolder(val view: View): RecyclerView.ViewHolder(view) {
-        val nameTv: TextView = view.findViewById(R.id.name_tv)
-        val emailTv: TextView = view.findViewById(R.id.email_tv)
-        val phoneTv: TextView = view.findViewById(R.id.phone_tv)
-        val imageIv: ImageView = view.findViewById(R.id.image_iv)
+        private val nameTv: TextView = view.findViewById(R.id.name_tv)
+        private val emailTv: TextView = view.findViewById(R.id.email_tv)
+        private val phoneTv: TextView = view.findViewById(R.id.phone_tv)
+        private val imageIv: ImageView = view.findViewById(R.id.image_iv)
 
         fun render(item: Contact) {
             view.setOnClickListener {
-                onItemClick?.invoke(item)
+                onItemClick?.invoke(item, this)
             }
             nameTv.text = item.name
             emailTv.text = item.email
@@ -56,4 +58,11 @@ class ContactListAdapter(val context: Context, val contact: MutableList<Contact>
     }
 
     fun getItem(i: Int) = contact[i]
+
+    // Updates the contact list everytime ContactViewModel notifies a change
+    fun updateList(newContact: MutableList<Contact>) {
+        contact.clear()
+        contact = newContact
+        notifyDataSetChanged()
+    }
 }
