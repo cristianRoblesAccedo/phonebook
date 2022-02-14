@@ -1,12 +1,10 @@
-package com.example.phonebook
+package com.example.phonebook.model
 
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.widget.Toast
-import java.io.InputStream
-import kotlin.math.abs
 
 class BitmapCropper {
     companion object {

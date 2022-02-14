@@ -7,7 +7,7 @@
     <data>
         <variable
             name="displayData"
-            type="com.example.phonebook.Contact"/>
+            type="com.example.phonebook.model.Contact"/>
     </data>
 
     <ScrollView

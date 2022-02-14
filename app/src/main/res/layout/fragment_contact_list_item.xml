@@ -8,7 +8,7 @@
     <data>
         <variable
             name="contact"
-            type="com.example.phonebook.Contact"/>
+            type="com.example.phonebook.model.Contact"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

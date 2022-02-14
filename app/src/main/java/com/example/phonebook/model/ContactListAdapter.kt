@@ -1,4 +1,4 @@
-package com.example.phonebook
+package com.example.phonebook.model
 
 import android.content.Context
 import android.net.Uri
@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.phonebook.R
 
 class ContactListAdapter(val context: Context, val contact: MutableList<Contact>): RecyclerView.Adapter<ContactListAdapter.CardHolder>() {
     var onItemClick: ((Contact) -> Unit)? = null

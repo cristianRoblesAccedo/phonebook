@@ -12,6 +12,9 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.phonebook.databinding.FragmentContactListBinding
+import com.example.phonebook.model.Contact
+import com.example.phonebook.model.ContactListAdapter
+import com.example.phonebook.model.SwipeToRemoveGesture
 import com.google.android.material.snackbar.Snackbar
 
 val cardList = mutableListOf<Contact>()

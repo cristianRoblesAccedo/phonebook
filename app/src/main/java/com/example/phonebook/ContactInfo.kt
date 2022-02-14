@@ -7,6 +7,8 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.databinding.DataBindingUtil
 import com.example.phonebook.databinding.FragmentContactInfoBinding
+import com.example.phonebook.model.BitmapCropper
+import com.example.phonebook.model.Contact
 
 class ContactInfo : Fragment() {
     private lateinit var binding: FragmentContactInfoBinding

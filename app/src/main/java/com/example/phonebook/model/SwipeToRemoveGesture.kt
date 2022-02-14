@@ -1,4 +1,4 @@
-package com.example.phonebook
+package com.example.phonebook.model
 
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
