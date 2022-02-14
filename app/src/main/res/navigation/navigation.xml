@@ -1,69 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
     app:startDestination="@id/contactCardList">
+
+    <fragment
+        android:id="@+id/contactCardList"
+        android:name="com.example.phonebook.ContactCardList"
+        android:label="ContactCardList" >
+        <action
+            android:id="@+id/action_contactCardList_to_contactInfo"
+            app:destination="@id/contactInfo" />
+        <action
+            android:id="@+id/action_contactCardList_to_addContact"
+            app:destination="@id/addContact" />
+    </fragment>
     <fragment
         android:id="@+id/addContact"
         android:name="com.example.phonebook.AddContact"
         android:label="AddContact" >
         <action
             android:id="@+id/action_addContact_to_contactCardList"
-            app:destination="@id/contactCardList"
-            app:popUpTo="@id/contactCardList"
-            app:popUpToInclusive="true" />
+            app:destination="@id/contactCardList" />
     </fragment>
     <fragment
-        android:id="@+id/contactCardList"
-        android:name="com.example.phonebook.ContactCardList"
-        android:label="ContactCardList" >
-        <action
-            android:id="@+id/action_contactCardList_to_addContact"
-            app:destination="@id/addContact"
-            app:popUpTo="@id/contactCardList"
-            app:popUpToInclusive="false" />
-        <argument
-            android:name="name"
-            app:argType="string"
-            app:nullable="true"
-            android:defaultValue="@null" />
-        <argument
-            android:name="phone"
-            app:argType="string"
-            app:nullable="true"
-            android:defaultValue="@null" />
-        <argument
-            android:name="email"
-            app:argType="string"
-            app:nullable="true"
-            android:defaultValue="@null" />
-        <argument
-            android:name="image"
-            app:argType="string"
-            app:nullable="true"
-            android:defaultValue="@null" />
-        <action
-            android:id="@+id/action_contactCardList_to_infoDisplay"
-            app:destination="@id/infoDisplay"
-            app:popUpTo="@id/contactCardList"
-            app:popUpToInclusive="false" />
-    </fragment>
-    <fragment
-        android:id="@+id/infoDisplay"
+        android:id="@+id/contactInfo"
         android:name="com.example.phonebook.ContactInfo"
-        android:label="InfoDisplay" >
-        <argument
-            android:name="name"
-            app:argType="string" />
-        <argument
-            android:name="phone"
-            app:argType="string" />
-        <argument
-            android:name="email"
-            app:argType="string" />
-        <argument
-            android:name="image"
-            app:argType="string" />
-    </fragment>
+        android:label="ContactInfo" />
 </navigation>

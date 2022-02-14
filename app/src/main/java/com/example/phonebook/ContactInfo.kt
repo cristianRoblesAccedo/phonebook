@@ -6,13 +6,20 @@ import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
+import androidx.navigation.navGraphViewModels
 import com.example.phonebook.databinding.FragmentContactInfoBinding
-import com.example.phonebook.model.BitmapCropper
-import com.example.phonebook.model.Contact
+import com.example.phonebook.models.BitmapCropper
+import com.example.phonebook.models.Contact
+import com.example.phonebook.viewmodels.ContactViewModel
 
 class ContactInfo : Fragment() {
     private lateinit var binding: FragmentContactInfoBinding
     private val displayData = Contact("", "", "", "")
+    private val contactViewModel: ContactViewModel by activityViewModels()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,20 +29,23 @@ class ContactInfo : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val args = ContactInfoArgs.fromBundle(requireArguments())
-        displayData.phone = args.phone
-        displayData.email = args.email
-        displayData.name = args.name
+
+        contactViewModel.contactModel.observe(viewLifecycleOwner, Observer {
+            displayData.name = it.name
+            displayData.email = it.email
+            displayData.phone = it.phone
+            if (it.image.isNotEmpty()) {
+                // Setting image URI
+                val cropImg = BitmapCropper.createBitmap(context, Uri.parse(it.image))
+                binding.imageIv.setImageBitmap(cropImg)
+            }
+        })
 
         // Inflate the layout for this fragment
-        binding =  DataBindingUtil.inflate(inflater, R.layout.fragment_contact_info, container, false)
+        binding =  DataBindingUtil.inflate(inflater,
+            R.layout.fragment_contact_info, container, false)
         // Variable for displaying data binding
         binding.displayData = displayData
-        // Setting image URI
-        if (args.image.isNotEmpty()) {
-            val cropImg = BitmapCropper.createBitmap(context, Uri.parse(args.image))
-            binding.imageIv.setImageBitmap(cropImg)
-        }
 
         binding.emailIv.setOnClickListener { _ ->
             startActivity(getEmailIntent())

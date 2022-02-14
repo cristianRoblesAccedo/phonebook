@@ -10,18 +10,25 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.navGraphViewModels
 import com.example.phonebook.databinding.FragmentAddContactBinding
-import com.example.phonebook.model.BitmapCropper
+import com.example.phonebook.models.BitmapCropper
+import com.example.phonebook.models.Contact
+import com.example.phonebook.viewmodels.ContactViewModel
 
 // Bitmap that stores a selected cropped image
 private var croppedImg: Bitmap? = null
 
 class AddContact : Fragment() {
     private var imageUri = ""
-    private var dataSubmited = false
+    private var dataSubmitted = false
     private lateinit var binding: FragmentAddContactBinding
-    private val phoneLenght = 10
+    private val phoneLength = 10
+    private val contactViewModel: ContactViewModel by activityViewModels()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,14 +56,13 @@ class AddContact : Fragment() {
 
         // binding listeners
         binding.addImageIv.setOnClickListener { getImageContract.launch("image/*") }
-        binding.addBtn.setOnClickListener{ validateInput(it) }
+        binding.addBtn.setOnClickListener{ validateInput() }
         return binding.root
     }
 
     override fun onStop() {
         super.onStop()
-        println("data submited: $dataSubmited")
-        if (!dataSubmited)
+        if (!dataSubmitted)
             saveState()
     }
 
@@ -109,7 +115,7 @@ class AddContact : Fragment() {
             imageUri = image
     }
 
-    private fun validateInput(view: View) {
+    private fun validateInput() {
         val nameLength = Pair(3, 50)
         val namePattern = """.{3,50}""".toRegex()
         val emailPattern = """([\w\d_]+\.)?+[\w\d_]+@[\w\d_]+(\.[\w\d]+)+""".toRegex()
@@ -135,7 +141,7 @@ class AddContact : Fragment() {
             binding.addEmailTil.isErrorEnabled = false
         }
 
-        if (binding.addPhoneEt.unMaskedText?.length != phoneLenght) {
+        if (binding.addPhoneEt.unMaskedText?.length != phoneLength) {
             binding.addPhoneTil.error = "Phone is not valid"
             binding.addPhoneTil.isErrorEnabled = true
         }
@@ -154,15 +160,18 @@ class AddContact : Fragment() {
             // Removes temporal data from shared preferences
             val sharedPref = requireActivity().getPreferences(Context.MODE_PRIVATE)
             sharedPref.edit().clear().apply()
-            dataSubmited = true
+            dataSubmitted = true
             croppedImg = null
-            // Returns back to contact list
-            findNavController().navigate(AddContactDirections.actionAddContactToContactCardList(
+
+            contactViewModel.addContact(Contact(
                 binding.addNameEt.text.toString(),
                 binding.addPhoneEt.text.toString(),
                 binding.addEmailEt.text.toString(),
                 imageUri
             ))
+
+            // Returns back to contact list
+            findNavController().navigate(R.id.action_addContact_to_contactCardList)
         }
     }
 }

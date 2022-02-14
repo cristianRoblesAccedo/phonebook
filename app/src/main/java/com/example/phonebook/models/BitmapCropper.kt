@@ -1,4 +1,4 @@
-package com.example.phonebook.model
+package com.example.phonebook.models
 
 import android.content.Context
 import android.graphics.Bitmap
