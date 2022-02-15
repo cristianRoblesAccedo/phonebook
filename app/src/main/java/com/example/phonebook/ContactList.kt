@@ -36,26 +36,18 @@ class ContactCardList : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+        val isTablet = resources.getBoolean(R.bool.isTablet)
         binding = DataBindingUtil.inflate<FragmentContactListBinding>(inflater,
             R.layout.fragment_contact_list,
             container,
             false)
-        val isTablet = resources.getBoolean(R.bool.isTablet)
+        binding.lifecycleOwner = this
+
         // Creates an instance of ContactViewModel adapted for navGraph
         adapter = ContactListAdapter(requireContext())
+        binding.contactCardList.adapter = adapter
 
-        val swipeGesture = object : SwipeToRemoveGesture() {
-            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                super.onSwiped(viewHolder, direction)
-                val tmpContact = adapter.getItem(viewHolder.absoluteAdapterPosition)
-                adapter.deleteItem(viewHolder.absoluteAdapterPosition)
-                Snackbar.make(binding.contactCardList, "Contact deleted", Snackbar.LENGTH_LONG)
-                    .setAction("Undo") { _ ->
-                        adapter.addItem(viewHolder.absoluteAdapterPosition + 1, tmpContact)
-                    }
-                    .show()
-            }
-        }
+        val swipeGesture = SwipeToRemoveGesture(binding.contactCardList, adapter, contactViewModel)
         val touchHelper = ItemTouchHelper(swipeGesture)
         touchHelper.attachToRecyclerView(binding.contactCardList)
 
@@ -66,13 +58,10 @@ class ContactCardList : Fragment() {
             binding.contactCardList.layoutManager = GridLayoutManager(context, 2)
 
         // Info Fragment displays on screen only on tablets
-        println("On create view")
         if (isTablet)
             binding.infoFragment.visibility = View.VISIBLE
         else
             binding.infoFragment.visibility = View.GONE
-
-        binding.contactCardList.adapter = adapter
 
         contactViewModel.contactListIsEmptyModel.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             // Displays msg on screen if cardList is empty
@@ -89,9 +78,7 @@ class ContactCardList : Fragment() {
 
         // When an item in the contact list is clicked we get its index and notify the ViewModel
         adapter.onItemClick = { _, viewHolder ->
-            println("name before: ${contactViewModel.contactModel.value?.image.toString()}")
             contactViewModel.setContactInfo(viewHolder.absoluteAdapterPosition)
-            println("name after: ${contactViewModel.contactModel.value?.image.toString()}")
             if (!isTablet)
                 findNavController().navigate(R.id.action_contactCardList_to_contactInfo)
         }
@@ -102,9 +89,5 @@ class ContactCardList : Fragment() {
         }
 
         return binding.root
-    }
-
-    override fun onStart() {
-        super.onStart()
     }
 }

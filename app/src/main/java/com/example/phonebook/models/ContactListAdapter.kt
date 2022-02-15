@@ -30,6 +30,8 @@ class ContactListAdapter(val context: Context): RecyclerView.Adapter<ContactList
             if (item.image.isNotEmpty()) {
                 val imageCrop = BitmapCropper.createBitmap(context, Uri.parse(item.image))
                 imageIv.setImageBitmap(imageCrop)
+            } else {
+                imageIv.setImageDrawable(context.getDrawable(R.drawable.ic_baseline_image_not_supported_24))
             }
         }
     }
@@ -61,7 +63,6 @@ class ContactListAdapter(val context: Context): RecyclerView.Adapter<ContactList
 
     // Updates the contact list everytime ContactViewModel notifies a change
     fun updateList(newContacts: MutableList<Contact>) {
-        contact.clear()
         contact = newContacts
         notifyDataSetChanged()
     }

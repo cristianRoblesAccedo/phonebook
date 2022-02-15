@@ -34,6 +34,8 @@ class ContactInfo : Fragment() {
             if (!image.isNullOrEmpty()) {
                 val imageBitmap = BitmapCropper.createBitmap(context, Uri.parse(image))
                 binding.imageIv.setImageBitmap(imageBitmap)
+            } else {
+                binding.imageIv.setImageDrawable(requireContext().getDrawable(R.drawable.ic_baseline_image_not_supported_24))
             }
         })
 
