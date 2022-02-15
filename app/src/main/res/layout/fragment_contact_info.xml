@@ -7,7 +7,7 @@
     <data>
         <variable
             name="displayData"
-            type="com.example.phonebook.models.Contact"/>
+            type="com.example.phonebook.viewmodels.ContactViewModel" />
     </data>
 
     <ScrollView
@@ -40,7 +40,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="48dp"
                 android:layout_marginEnd="16dp"
-                android:text="@={displayData.name}"
+                android:text="@={displayData.contactModel.name}"
                 android:textAlignment="center"
                 app:layout_constraintBottom_toTopOf="@+id/email_display_tv"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -53,7 +53,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:text="@={displayData.email}"
+                android:text="@={displayData.contactModel.email}"
                 app:layout_constraintBottom_toTopOf="@+id/phone_display_tv"
                 app:layout_constraintEnd_toStartOf="@+id/email_iv"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -67,7 +67,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginBottom="300dp"
-                android:text="@={displayData.phone}"
+                android:text="@={displayData.contactModel.phone}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/phone_iv"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -77,7 +77,7 @@
             <ImageView
                 android:id="@+id/phone_iv"
                 android:layout_width="wrap_content"
-                android:layout_height="0dp"
+                android:layout_height="24dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
                 android:background="#4CAF50"
@@ -104,7 +104,7 @@
             <ImageView
                 android:id="@+id/email_iv"
                 android:layout_width="wrap_content"
-                android:layout_height="0dp"
+                android:layout_height="24dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
                 android:background="#50D2D6"

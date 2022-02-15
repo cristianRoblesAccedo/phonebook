@@ -12,6 +12,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import com.example.phonebook.databinding.FragmentAddContactBinding
@@ -163,12 +164,17 @@ class AddContact : Fragment() {
             dataSubmitted = true
             croppedImg = null
 
+            contactViewModel.contactModel.observe(viewLifecycleOwner, Observer {
+                println("Data: ${it.phone} | ${it.name} | ${it.email}")
+            })
+
             contactViewModel.addContact(Contact(
                 binding.addNameEt.text.toString(),
                 binding.addPhoneEt.text.toString(),
                 binding.addEmailEt.text.toString(),
                 imageUri
             ))
+            contactViewModel.setContactInfo(contactViewModel.contactList.size - 1)
 
             // Returns back to contact list
             findNavController().navigate(R.id.action_addContact_to_contactCardList)

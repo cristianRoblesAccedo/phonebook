@@ -60,9 +60,9 @@ class ContactListAdapter(val context: Context): RecyclerView.Adapter<ContactList
     fun getItem(i: Int) = contact[i]
 
     // Updates the contact list everytime ContactViewModel notifies a change
-    fun updateList(newContact: MutableList<Contact>) {
+    fun updateList(newContacts: MutableList<Contact>) {
         contact.clear()
-        contact = newContact
+        contact = newContacts
         notifyDataSetChanged()
     }
 }
