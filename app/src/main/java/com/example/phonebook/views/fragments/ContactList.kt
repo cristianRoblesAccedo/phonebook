@@ -32,43 +32,48 @@ class ContactCardList : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
+        // Checks whether the device is a tablet based on its minimum width (600dp)
         val isTablet = resources.getBoolean(R.bool.isTablet)
+        var landscapeTablet = false
+
+        // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate<FragmentContactListBinding>(inflater,
             R.layout.fragment_contact_list,
             container,
             false)
         binding.lifecycleOwner = this
 
-        // Creates an instance of ContactViewModel adapted for navGraph
+        // Layout manager and adapter are bound to RecyclerView
         adapter = ContactListAdapter(requireContext())
         binding.contactCardList.adapter = adapter
 
+        // Creates and ItemTouchHelper and attaches it to the ContactList
         val swipeGesture = SwipeToRemoveGesture(binding.contactCardList, adapter, contactViewModel)
         val touchHelper = ItemTouchHelper(swipeGesture)
         touchHelper.attachToRecyclerView(binding.contactCardList)
 
-        // Layout manager and adapter are bound to RecyclerView
-        if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT)
-            binding.contactCardList.layoutManager = LinearLayoutManager(context)
-        else
+        // Changes layoutManager based on device type and its orientation
+        if (isTablet || resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             binding.contactCardList.layoutManager = GridLayoutManager(context, 2)
+            if (isTablet && resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE)
+                landscapeTablet = true
+        } else {
+            binding.contactCardList.layoutManager = LinearLayoutManager(context)
+        }
+        // Renders infoFragment only on landscape mode tablets
+        binding.infoFragment.visibility = if (landscapeTablet) View.VISIBLE else View.GONE
 
-        // Info Fragment displays on screen only on tablets
-        if (isTablet)
-            binding.infoFragment.visibility = View.VISIBLE
-        else
-            binding.infoFragment.visibility = View.GONE
-
-        contactViewModel.contactListIsEmptyModel.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+        // Observer that changes the visibility on views based on the size of the contact list
+        contactViewModel.contactListIsEmptyModel.observe(viewLifecycleOwner, androidx.lifecycle.Observer { isEmpty: Boolean ->
             // Displays msg on screen if cardList is empty
-            if (it) {
+            if (isEmpty) {
                 binding.emptyListTv.visibility = View.VISIBLE
                 binding.infoFragment.visibility = View.GONE
             } else {
                 binding.emptyListTv.visibility = View.GONE
             }
         })
+        // Observer that updates the contact list in RecyclerView's adapter based on the changes made on contactListModel
         contactViewModel.contactListModel.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             adapter.updateList(it)
         })
@@ -76,7 +81,7 @@ class ContactCardList : Fragment() {
         // When an item in the contact list is clicked we get its index and notify the ViewModel
         adapter.onItemClick = { _, viewHolder ->
             contactViewModel.setContactInfo(viewHolder.absoluteAdapterPosition)
-            if (!isTablet)
+            if (!landscapeTablet)
                 findNavController().navigate(R.id.action_contactCardList_to_contactInfo)
         }
 
