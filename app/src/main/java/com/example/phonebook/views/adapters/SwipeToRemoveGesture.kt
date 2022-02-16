@@ -1,4 +1,4 @@
-package com.example.phonebook.models
+package com.example.phonebook.views.adapters
 
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
@@ -23,9 +23,8 @@ class SwipeToRemoveGesture(
         contactViewModel.removeContact(viewHolder.absoluteAdapterPosition)
         adapter.updateList(contactViewModel.contactListModel.value!!)
         Snackbar.make(recyclerView, "Contact deleted", Snackbar.LENGTH_LONG)
-            .setAction("Undo") { _ ->
+            .setAction("Undo") {
                 contactViewModel.addContact(tmpContact)
-                println("contacts: {${contactViewModel.contactListModel.value}}")
                 adapter.updateList(contactViewModel.contactListModel.value!!)
             }
             .show()

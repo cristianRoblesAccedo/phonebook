@@ -1,7 +1,6 @@
-package com.example.phonebook
+package com.example.phonebook.views.fragments
 
 import android.content.res.Configuration
-import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -14,13 +13,11 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import com.example.phonebook.R
 import com.example.phonebook.databinding.FragmentContactListBinding
-import com.example.phonebook.models.ContactListAdapter
-import com.example.phonebook.models.SwipeToRemoveGesture
+import com.example.phonebook.views.adapters.ContactListAdapter
+import com.example.phonebook.views.adapters.SwipeToRemoveGesture
 import com.example.phonebook.viewmodels.ContactViewModel
-import com.google.android.material.snackbar.Snackbar
-import java.util.*
 
 class ContactCardList : Fragment() {
     private val contactViewModel: ContactViewModel by activityViewModels()

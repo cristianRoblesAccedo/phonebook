@@ -1,4 +1,4 @@
-package com.example.phonebook
+package com.example.phonebook.views.fragments
 
 import android.content.Context
 import android.graphics.Bitmap
@@ -11,10 +11,8 @@ import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.navGraphViewModels
+import com.example.phonebook.R
 import com.example.phonebook.databinding.FragmentAddContactBinding
 import com.example.phonebook.models.BitmapCropper
 import com.example.phonebook.models.Contact
@@ -39,9 +37,10 @@ class AddContact : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_contact, container, false)
+        binding.lifecycleOwner = this
+        binding.contact = contactViewModel
 
         // Renders user image everytime the fragment gets rendered
         croppedImg?.let {
@@ -102,18 +101,21 @@ class AddContact : Fragment() {
 
     private fun recoverState() {
         val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE)
+        val contact = Contact()
         val name = sharedPref?.getString("name", null)
         val phone = sharedPref?.getString("phone", null)
         val email = sharedPref?.getString("email", null)
         val image = sharedPref?.getString("image_uri", null)
+
         if (!name.isNullOrEmpty())
-            binding.addNameEt.setText(name)
+            contact.name = name
         if (!phone.isNullOrEmpty())
-            binding.addPhoneEt.setText(phone)
+            contact.phone = phone
         if (!email.isNullOrEmpty())
-            binding.addEmailEt.setText(email)
+            contact.email = email
         if (!image.isNullOrEmpty() && imageUri.isEmpty())
             imageUri = image
+        contactViewModel.contactModel.value = contact
     }
 
     private fun validateInput() {
@@ -163,10 +165,6 @@ class AddContact : Fragment() {
             sharedPref.edit().clear().apply()
             dataSubmitted = true
             croppedImg = null
-
-            contactViewModel.contactModel.observe(viewLifecycleOwner, Observer {
-                println("Data: ${it.phone} | ${it.name} | ${it.email}")
-            })
 
             contactViewModel.addContact(Contact(
                 binding.addNameEt.text.toString(),

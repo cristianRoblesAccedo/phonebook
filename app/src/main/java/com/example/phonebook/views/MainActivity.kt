@@ -1,4 +1,4 @@
-package com.example.phonebook
+package com.example.phonebook.views
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

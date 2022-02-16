@@ -1,4 +1,4 @@
-package com.example.phonebook
+package com.example.phonebook.views.fragments
 
 import android.content.Intent
 import android.net.Uri
@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import com.example.phonebook.R
 import com.example.phonebook.databinding.FragmentContactInfoBinding
 import com.example.phonebook.models.BitmapCropper
 import com.example.phonebook.viewmodels.ContactViewModel
@@ -42,13 +43,13 @@ class ContactInfo : Fragment() {
         // Variable for displaying data binding
         binding.displayData = contactViewModel
 
-        binding.emailIv.setOnClickListener { _ ->
+        binding.emailIv.setOnClickListener {
             startActivity(getEmailIntent())
         }
-        binding.phoneIv.setOnClickListener { _ ->
+        binding.phoneIv.setOnClickListener {
             startActivity(getPhoneIntent())
         }
-        binding.messageIv.setOnClickListener { _ ->
+        binding.messageIv.setOnClickListener {
             startActivity(getSmsIntent())
         }
 

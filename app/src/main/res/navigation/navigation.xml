@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/contactCardList"
-        android:name="com.example.phonebook.ContactCardList"
+        android:name="com.example.phonebook.views.fragments.ContactCardList"
         android:label="ContactCardList" >
         <action
             android:id="@+id/action_contactCardList_to_contactInfo"
@@ -20,7 +20,7 @@
     </fragment>
     <fragment
         android:id="@+id/addContact"
-        android:name="com.example.phonebook.AddContact"
+        android:name="com.example.phonebook.views.fragments.AddContact"
         android:label="AddContact" >
         <action
             android:id="@+id/action_addContact_to_contactCardList"
@@ -30,6 +30,6 @@
     </fragment>
     <fragment
         android:id="@+id/contactInfo"
-        android:name="com.example.phonebook.ContactInfo"
+        android:name="com.example.phonebook.views.fragments.ContactInfo"
         android:label="ContactInfo" />
 </navigation>
