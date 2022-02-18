@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import com.bumptech.glide.Glide
 import com.example.phonebook.R
 import com.example.phonebook.databinding.FragmentContactInfoBinding
 import com.example.phonebook.models.BitmapCropper
@@ -33,8 +34,7 @@ class ContactInfo : Fragment() {
         contactViewModel.contactLiveData.observe(viewLifecycleOwner, Observer {
             val image = contactViewModel.contactLiveData.value?.image
             if (!image.isNullOrEmpty()) {
-                val imageBitmap = BitmapCropper.createBitmap(context, Uri.parse(image))
-                binding.imageIv.setImageBitmap(imageBitmap)
+                Glide.with(this).load(image).into(binding.imageIv)
             } else {
                 binding.imageIv.setImageDrawable(requireContext().getDrawable(R.drawable.ic_baseline_image_not_supported_24))
             }

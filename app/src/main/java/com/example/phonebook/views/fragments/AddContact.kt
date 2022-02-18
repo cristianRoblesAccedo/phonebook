@@ -11,22 +11,21 @@ import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 import com.example.phonebook.R
 import com.example.phonebook.databinding.FragmentAddContactBinding
 import com.example.phonebook.models.BitmapCropper
 import com.example.phonebook.models.Contact
 import com.example.phonebook.viewmodels.ContactViewModel
 
-// Bitmap that stores a selected cropped image
-private var croppedImg: Bitmap? = null
-
 class AddContact : Fragment() {
-    private var imageUri = ""
     private var dataSubmitted = false
     private lateinit var binding: FragmentAddContactBinding
     private val phoneLength = 10
     private val contactViewModel: ContactViewModel by activityViewModels()
+    private var contact = Contact()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,20 +38,14 @@ class AddContact : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_contact, container, false)
-        binding.lifecycleOwner = this
+        //binding.lifecycleOwner = this
         binding.contact = contactViewModel
 
-        // Renders user image everytime the fragment gets rendered
-        croppedImg?.let {
-            binding.addImageIv.setImageBitmap(it)
-        }
-
-        // Establishes a contract for getting an image from storage
-        val getImageContract = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
-            uri?.let {
-                getCroppedBitmap(it)
+        contactViewModel.contactLiveData.observe(viewLifecycleOwner, Observer { cont ->
+            cont?.let {
+                contact = it
             }
-        }
+        })
 
         // binding listeners
         binding.addImageIv.setOnClickListener {
@@ -73,21 +66,14 @@ class AddContact : Fragment() {
         super.onResume()
         recoverState()
         try {
-            if (imageUri.isNotEmpty()) {
-                getCroppedBitmap(Uri.parse(imageUri))
-                croppedImg.let {
-                    binding.addImageIv.setImageBitmap(it)
+            contactViewModel.contactLiveData.value?.image?.let {
+                if (it.isNotEmpty()) {
+                    Glide.with(requireActivity()).load(it).into(binding.addImageIv)
                 }
             }
         } catch (e: SecurityException) {
-            imageUri = ""
-        }
-    }
 
-    private fun getCroppedBitmap(uri: Uri) {
-        croppedImg = BitmapCropper.createBitmap(context, uri)
-        imageUri = uri.toString()
-        binding.addImageIv.setImageBitmap(croppedImg)
+        }
     }
 
     private fun saveState() {
@@ -96,28 +82,26 @@ class AddContact : Fragment() {
             this?.putString("name", binding.addNameEt.text.toString())
             this?.putString("phone", binding.addPhoneEt.text.toString())
             this?.putString("email", binding.addEmailEt.text.toString())
-            if (imageUri.isNotEmpty())
-                this?.putString("image_uri", imageUri)
-            this?.apply()
+            this?.putString("image_uri", contact.image)
         }
     }
 
     private fun recoverState() {
         val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE)
-        val contact = Contact()
         val name = sharedPref?.getString("name", null)
         val phone = sharedPref?.getString("phone", null)
         val email = sharedPref?.getString("email", null)
         val image = sharedPref?.getString("image_uri", null)
-
+        println("name: $name")
         if (!name.isNullOrEmpty())
             contact.name = name
         if (!phone.isNullOrEmpty())
             contact.phone = phone
         if (!email.isNullOrEmpty())
             contact.email = email
-        if (!image.isNullOrEmpty() && imageUri.isEmpty())
-            imageUri = image
+        if (!image.isNullOrEmpty() && contactViewModel.contactLiveData.value?.image?.isEmpty()!!)
+            contact.image = image
+        println("contact: $contact")
         contactViewModel.setContactInfo(contact)
     }
 
@@ -167,13 +151,12 @@ class AddContact : Fragment() {
             val sharedPref = requireActivity().getPreferences(Context.MODE_PRIVATE)
             sharedPref.edit().clear().apply()
             dataSubmitted = true
-            croppedImg = null
 
             contactViewModel.addContact(Contact(
                 binding.addNameEt.text.toString(),
                 binding.addPhoneEt.text.toString(),
                 binding.addEmailEt.text.toString(),
-                imageUri
+                contact.image
             ))
             contactViewModel.setContactInfo(contactViewModel.contactList.size - 1)
 

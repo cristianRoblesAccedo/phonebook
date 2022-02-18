@@ -30,7 +30,8 @@
         <action
             android:id="@+id/action_addContact_to_selectImageList"
             app:destination="@id/selectImageList"
-            app:popUpTo="@id/addContact" />
+            app:popUpTo="@id/addContact"
+            app:popUpToInclusive="false" />
     </fragment>
     <fragment
         android:id="@+id/contactInfo"
@@ -39,5 +40,11 @@
     <fragment
         android:id="@+id/selectImageList"
         android:name="com.example.phonebook.views.fragments.SelectImageList"
-        android:label="SelectImageList" />
+        android:label="SelectImageList" >
+        <action
+            android:id="@+id/action_selectImageList_to_addContact"
+            app:destination="@id/addContact"
+            app:popUpTo="@id/addContact"
+            app:popUpToInclusive="true" />
+    </fragment>
 </navigation>

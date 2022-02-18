@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.phonebook.R
 import com.example.phonebook.models.BitmapCropper
 import com.example.phonebook.models.Contact
@@ -30,8 +31,7 @@ class ContactListAdapter(val context: Context): RecyclerView.Adapter<ContactList
             emailTv.text = item.email
             phoneTv.text = item.phone
             if (item.image.isNotEmpty()) {
-                val imageCrop = BitmapCropper.createBitmap(context, Uri.parse(item.image))
-                imageIv.setImageBitmap(imageCrop)
+                Glide.with(view).load(item.image).into(imageIv)
             } else {
                 imageIv.setImageDrawable(context.getDrawable(R.drawable.ic_baseline_image_not_supported_24))
             }

@@ -9,6 +9,7 @@ class ContactViewModel: ViewModel() {
     val contactListLiveData = MutableLiveData<MutableList<Contact>>()
     val contactLiveData = MutableLiveData<Contact>()
     val contactListIsEmptyLiveData = MutableLiveData<Boolean>()
+    val imageSelectedLiveData = MutableLiveData<Boolean>()
 
     init {
         contactListIsEmptyLiveData.postValue(contactList.size == 0)
@@ -32,5 +33,14 @@ class ContactViewModel: ViewModel() {
 
     fun setContactInfo(contact: Contact) {
         contactLiveData.postValue(contact)
+    }
+
+    fun setContactImage(url: String) {
+        val tmp = contactLiveData.value
+        tmp?.image = url
+        tmp?.let {
+            contactLiveData.postValue(it)
+            imageSelectedLiveData.postValue(true)
+        }
     }
 }
