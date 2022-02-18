@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -16,17 +15,10 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.phonebook.R
 import com.example.phonebook.databinding.FragmentContactListBinding
-import com.example.phonebook.models.Contact
-import com.example.phonebook.models.TMDBService
 import com.example.phonebook.views.adapters.ContactListAdapter
 import com.example.phonebook.views.adapters.SwipeToRemoveGesture
 import com.example.phonebook.viewmodels.ContactViewModel
 import com.example.phonebook.viewmodels.RetrofitViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 class ContactCardList : Fragment() {
     private val contactViewModel: ContactViewModel by activityViewModels()
@@ -77,7 +69,7 @@ class ContactCardList : Fragment() {
         binding.infoFragment.visibility = if (landscapeTablet) View.VISIBLE else View.GONE
 
         // Observer that changes the visibility on views based on the size of the contact list
-        contactViewModel.contactListIsEmptyModel.observe(viewLifecycleOwner, androidx.lifecycle.Observer { isEmpty: Boolean ->
+        contactViewModel.contactListIsEmptyLiveData.observe(viewLifecycleOwner, androidx.lifecycle.Observer { isEmpty: Boolean ->
             // Displays msg on screen if cardList is empty
             if (isEmpty) {
                 binding.emptyListTv.visibility = View.VISIBLE
@@ -87,7 +79,7 @@ class ContactCardList : Fragment() {
             }
         })
         // Observer that updates the contact list in RecyclerView's adapter based on the changes made on contactListModel
-        contactViewModel.contactListModel.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+        contactViewModel.contactListLiveData.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             adapter.updateList(it)
         })
 

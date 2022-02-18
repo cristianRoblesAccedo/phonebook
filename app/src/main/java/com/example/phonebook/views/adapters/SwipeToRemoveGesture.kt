@@ -21,11 +21,11 @@ class SwipeToRemoveGesture(
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
         val tmpContact = adapter.getItem(viewHolder.absoluteAdapterPosition)
         contactViewModel.removeContact(viewHolder.absoluteAdapterPosition)
-        adapter.updateList(contactViewModel.contactListModel.value!!)
+        adapter.updateList(contactViewModel.contactListLiveData.value!!)
         Snackbar.make(recyclerView, "Contact deleted", Snackbar.LENGTH_LONG)
             .setAction("Undo") {
                 contactViewModel.addContact(tmpContact)
-                adapter.updateList(contactViewModel.contactListModel.value!!)
+                adapter.updateList(contactViewModel.contactListLiveData.value!!)
             }
             .show()
     }

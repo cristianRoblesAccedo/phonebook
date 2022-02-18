@@ -30,8 +30,8 @@ class ContactInfo : Fragment() {
             R.layout.fragment_contact_info, container, false)
         binding.lifecycleOwner = this
 
-        contactViewModel.contactModel.observe(viewLifecycleOwner, Observer {
-            val image = contactViewModel.contactModel.value?.image
+        contactViewModel.contactLiveData.observe(viewLifecycleOwner, Observer {
+            val image = contactViewModel.contactLiveData.value?.image
             if (!image.isNullOrEmpty()) {
                 val imageBitmap = BitmapCropper.createBitmap(context, Uri.parse(image))
                 binding.imageIv.setImageBitmap(imageBitmap)
@@ -58,15 +58,15 @@ class ContactInfo : Fragment() {
 
     // Creates an Intent for making a phone call
     private fun getPhoneIntent(): Intent = Intent(
-        Intent.ACTION_DIAL, Uri.parse("tel:${contactViewModel.contactModel.value?.phone}")
+        Intent.ACTION_DIAL, Uri.parse("tel:${contactViewModel.contactLiveData.value?.phone}")
     )
 
     // Creates an Intent for sending an email
     private fun getEmailIntent(): Intent = Intent(
-        Intent.ACTION_SENDTO, Uri.fromParts("mailto", contactViewModel.contactModel.value?.email, null))
+        Intent.ACTION_SENDTO, Uri.fromParts("mailto", contactViewModel.contactLiveData.value?.email, null))
 
     // Creates an Intent for sending a text message
     private fun getSmsIntent(): Intent = Intent(
-        Intent.ACTION_SENDTO, Uri.parse("smsto:${contactViewModel.contactModel.value?.phone}")
+        Intent.ACTION_SENDTO, Uri.parse("smsto:${contactViewModel.contactLiveData.value?.phone}")
     )
 }

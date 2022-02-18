@@ -6,27 +6,31 @@ import com.example.phonebook.models.Contact
 
 class ContactViewModel: ViewModel() {
     val contactList = mutableListOf<Contact>()
-    val contactListModel = MutableLiveData<MutableList<Contact>>()
-    val contactModel = MutableLiveData<Contact>()
-    val contactListIsEmptyModel = MutableLiveData<Boolean>()
+    val contactListLiveData = MutableLiveData<MutableList<Contact>>()
+    val contactLiveData = MutableLiveData<Contact>()
+    val contactListIsEmptyLiveData = MutableLiveData<Boolean>()
 
     init {
-        contactListIsEmptyModel.postValue(contactList.size == 0)
+        contactListIsEmptyLiveData.postValue(contactList.size == 0)
     }
 
     fun addContact(contact: Contact) {
         contactList.add(contact)
-        contactListModel.postValue(contactList)
-        contactListIsEmptyModel.postValue(contactList.size == 0)
+        contactListLiveData.postValue(contactList)
+        contactListIsEmptyLiveData.postValue(contactList.size == 0)
     }
 
     fun removeContact(index: Int) {
         contactList.removeAt(index)
-        contactListModel.postValue(contactList)
-        contactListIsEmptyModel.postValue(contactList.size == 0)
+        contactListLiveData.postValue(contactList)
+        contactListIsEmptyLiveData.postValue(contactList.size == 0)
     }
 
     fun setContactInfo(index: Int) {
-        contactModel.postValue(contactList[index])
+        contactLiveData.postValue(contactList[index])
+    }
+
+    fun setContactInfo(contact: Contact) {
+        contactLiveData.postValue(contact)
     }
 }

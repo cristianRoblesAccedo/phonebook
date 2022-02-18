@@ -55,7 +55,10 @@ class AddContact : Fragment() {
         }
 
         // binding listeners
-        binding.addImageIv.setOnClickListener { getImageContract.launch("image/*") }
+        binding.addImageIv.setOnClickListener {
+            // getImageContract.launch("image/*")
+            findNavController().navigate(R.id.action_addContact_to_selectImageList)
+        }
         binding.addBtn.setOnClickListener{ validateInput() }
         return binding.root
     }
@@ -115,7 +118,7 @@ class AddContact : Fragment() {
             contact.email = email
         if (!image.isNullOrEmpty() && imageUri.isEmpty())
             imageUri = image
-        contactViewModel.contactModel.value = contact
+        contactViewModel.setContactInfo(contact)
     }
 
     private fun validateInput() {
