@@ -20,7 +20,6 @@ class RetrofitViewModel: ViewModel() {
         .baseUrl(baseUrl)
         .addConverterFactory(GsonConverterFactory.create())
         .build()
-    private val personList = mutableListOf<PersonResponse>()
     val personListLiveData = MutableLiveData<MutableList<PersonResponse>>()
 
     fun getPopularPeople() {

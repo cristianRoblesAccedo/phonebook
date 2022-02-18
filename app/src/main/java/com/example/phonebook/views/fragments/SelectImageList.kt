@@ -44,7 +44,9 @@ class SelectImageList : Fragment() {
         })
 
         contactViewModel.imageSelectedLiveData.observe(viewLifecycleOwner, Observer {
-            findNavController().navigate(R.id.action_selectImageList_to_addContact)
+            if (contactViewModel.imageSelectedLiveData.value!!)
+                findNavController().navigate(SelectImageListDirections.actionSelectImageListToAddContact())
+            contactViewModel.setContactImage(false)
         })
 
         return binding.root

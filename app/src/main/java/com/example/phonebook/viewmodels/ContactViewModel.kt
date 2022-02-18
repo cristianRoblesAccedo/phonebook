@@ -35,12 +35,7 @@ class ContactViewModel: ViewModel() {
         contactLiveData.postValue(contact)
     }
 
-    fun setContactImage(url: String) {
-        val tmp = contactLiveData.value
-        tmp?.image = url
-        tmp?.let {
-            contactLiveData.postValue(it)
-            imageSelectedLiveData.postValue(true)
-        }
+    fun setContactImage(postValue: Boolean) {
+        imageSelectedLiveData.postValue(postValue)
     }
 }
