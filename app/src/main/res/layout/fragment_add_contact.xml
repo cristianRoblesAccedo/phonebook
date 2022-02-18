@@ -46,7 +46,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:inputType="textPersonName"
-                    android:text="@={contact.contactLiveData.name}"
+                    android:text="@={contact.contactTmpLiveData.name}"
                     />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -64,7 +64,7 @@
                     android:layout_height="match_parent"
                     android:layout_width="match_parent"
                     android:inputType="phone"
-                    android:text="@={contact.contactLiveData.phone}"
+                    android:text="@={contact.contactTmpLiveData.phone}"
                     app:mask="+52 (###) (###) (####)" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -81,7 +81,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:inputType="textEmailAddress"
-                    android:text="@={contact.contactLiveData.email}" />
+                    android:text="@={contact.contactTmpLiveData.email}" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button

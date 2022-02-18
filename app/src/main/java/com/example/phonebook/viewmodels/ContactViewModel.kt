@@ -7,7 +7,8 @@ import com.example.phonebook.models.Contact
 class ContactViewModel: ViewModel() {
     val contactList = mutableListOf<Contact>()
     val contactListLiveData = MutableLiveData<MutableList<Contact>>()
-    val contactLiveData = MutableLiveData<Contact>()
+    val contactInfoLiveData = MutableLiveData<Contact>()
+    val contactTmpLiveData = MutableLiveData<Contact>()
     val contactListIsEmptyLiveData = MutableLiveData<Boolean>()
     val imageSelectedLiveData = MutableLiveData<Boolean>()
 
@@ -28,11 +29,11 @@ class ContactViewModel: ViewModel() {
     }
 
     fun setContactInfo(index: Int) {
-        contactLiveData.postValue(contactList[index])
+        contactInfoLiveData.postValue(contactList[index])
     }
 
-    fun setContactInfo(contact: Contact) {
-        contactLiveData.postValue(contact)
+    fun setContactTmp(contact: Contact) {
+        contactTmpLiveData.postValue(contact)
     }
 
     fun setContactImage(postValue: Boolean) {

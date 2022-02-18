@@ -83,7 +83,7 @@ class ContactCardList : Fragment() {
             adapter.updateList(it)
         })
 
-        // When an item in the contact list is clicked we get its index and notify the ViewModel
+        // When an item in the contact list gets clicked we get its index and notify the ViewModel
         adapter.onItemClick = { _, viewHolder ->
             contactViewModel.setContactInfo(viewHolder.absoluteAdapterPosition)
             if (!landscapeTablet)

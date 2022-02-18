@@ -11,7 +11,6 @@ import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.example.phonebook.R
 import com.example.phonebook.databinding.FragmentContactInfoBinding
-import com.example.phonebook.models.BitmapCropper
 import com.example.phonebook.viewmodels.ContactViewModel
 
 class ContactInfo : Fragment() {
@@ -31,8 +30,8 @@ class ContactInfo : Fragment() {
             R.layout.fragment_contact_info, container, false)
         binding.lifecycleOwner = this
 
-        contactViewModel.contactLiveData.observe(viewLifecycleOwner, Observer {
-            val image = contactViewModel.contactLiveData.value?.image
+        contactViewModel.contactInfoLiveData.observe(viewLifecycleOwner, Observer {
+            val image = contactViewModel.contactInfoLiveData.value?.image
             if (!image.isNullOrEmpty()) {
                 Glide.with(this).load(image).into(binding.imageIv)
             } else {
@@ -58,15 +57,15 @@ class ContactInfo : Fragment() {
 
     // Creates an Intent for making a phone call
     private fun getPhoneIntent(): Intent = Intent(
-        Intent.ACTION_DIAL, Uri.parse("tel:${contactViewModel.contactLiveData.value?.phone}")
+        Intent.ACTION_DIAL, Uri.parse("tel:${contactViewModel.contactInfoLiveData.value?.phone}")
     )
 
     // Creates an Intent for sending an email
     private fun getEmailIntent(): Intent = Intent(
-        Intent.ACTION_SENDTO, Uri.fromParts("mailto", contactViewModel.contactLiveData.value?.email, null))
+        Intent.ACTION_SENDTO, Uri.fromParts("mailto", contactViewModel.contactInfoLiveData.value?.email, null))
 
     // Creates an Intent for sending a text message
     private fun getSmsIntent(): Intent = Intent(
-        Intent.ACTION_SENDTO, Uri.parse("smsto:${contactViewModel.contactLiveData.value?.phone}")
+        Intent.ACTION_SENDTO, Uri.parse("smsto:${contactViewModel.contactInfoLiveData.value?.phone}")
     )
 }

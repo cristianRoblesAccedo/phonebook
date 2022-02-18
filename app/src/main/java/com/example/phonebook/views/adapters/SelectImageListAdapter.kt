@@ -1,18 +1,12 @@
 package com.example.phonebook.views.adapters
 
-import android.app.Activity
-import android.app.Person
-import android.content.Context
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.phonebook.R
-import com.example.phonebook.models.Contact
 import com.example.phonebook.models.responses.PersonResponse
 import com.example.phonebook.viewmodels.ContactViewModel
 
@@ -25,10 +19,10 @@ class SelectImageListAdapter(val contactViewModel: ContactViewModel): RecyclerVi
         fun render(item: PersonResponse) {
             Glide.with(view).load(baseUrl + item.imagePath).into(imageIv)
             imageIv.setOnClickListener {
-                val contact = contactViewModel.contactLiveData.value
+                val contact = contactViewModel.contactTmpLiveData.value
                 contact?.image = baseUrl + item.imagePath
                 contact?.let {
-                    contactViewModel.setContactInfo(contact)
+                    contactViewModel.setContactTmp(contact)
                     contactViewModel.setContactImage(true)
                 }
             }

@@ -1,14 +1,11 @@
 package com.example.phonebook.views.fragments
 
 import android.content.Context
-import android.graphics.Bitmap
-import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -16,7 +13,6 @@ import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.phonebook.R
 import com.example.phonebook.databinding.FragmentAddContactBinding
-import com.example.phonebook.models.BitmapCropper
 import com.example.phonebook.models.Contact
 import com.example.phonebook.viewmodels.ContactViewModel
 
@@ -41,7 +37,7 @@ class AddContact : Fragment() {
         //binding.lifecycleOwner = this
         binding.contact = contactViewModel
 
-        contactViewModel.contactLiveData.observe(viewLifecycleOwner, Observer { cont ->
+        contactViewModel.contactTmpLiveData.observe(viewLifecycleOwner, Observer { cont ->
             cont?.let {
                 contact = it
             }
@@ -49,7 +45,6 @@ class AddContact : Fragment() {
 
         // binding listeners
         binding.addImageIv.setOnClickListener {
-            // getImageContract.launch("image/*")
             findNavController().navigate(R.id.action_addContact_to_selectImageList)
         }
         binding.addBtn.setOnClickListener{ validateInput() }
@@ -66,7 +61,7 @@ class AddContact : Fragment() {
         super.onResume()
         recoverState()
         try {
-            contactViewModel.contactLiveData.value?.image?.let {
+            contactViewModel.contactTmpLiveData.value?.image?.let {
                 if (it.isNotEmpty()) {
                     Glide.with(requireActivity()).load(it).into(binding.addImageIv)
                 }
@@ -99,10 +94,9 @@ class AddContact : Fragment() {
             contact.phone = phone
         if (!email.isNullOrEmpty())
             contact.email = email
-        if (!image.isNullOrEmpty() && contactViewModel.contactLiveData.value?.image?.isEmpty()!!)
+        if (!image.isNullOrEmpty() && contactViewModel.contactTmpLiveData.value?.image?.isEmpty()!!)
             contact.image = image
-        println("contact: $contact")
-        contactViewModel.setContactInfo(contact)
+        contactViewModel.setContactTmp(contact)
     }
 
     private fun validateInput() {
@@ -159,6 +153,7 @@ class AddContact : Fragment() {
                 contact.image
             ))
             contactViewModel.setContactInfo(contactViewModel.contactList.size - 1)
+            contactViewModel.setContactTmp(Contact())
 
             // Returns back to contact list
             findNavController().navigate(R.id.action_addContact_to_contactCardList)
