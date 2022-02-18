@@ -8,4 +8,6 @@
     <string name="button_add">Add</string>
     <string name="empty_list_msg">Contact list is empty, try adding a new contact first!</string>
     <string name="phone_ext">+52 </string>
+    <string name="api_key">8cf6b9028b7faea32272410623cc9121</string>
+    <string name="base_url">https://api.themoviedb.org/</string>
 </resources>

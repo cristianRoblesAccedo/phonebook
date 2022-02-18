@@ -51,16 +51,6 @@ class ContactListAdapter(val context: Context): RecyclerView.Adapter<ContactList
     // Return the size of the viewHolder
     override fun getItemCount(): Int = contact.size
 
-    fun deleteItem(i: Int) {
-        contact.removeAt(i)
-        notifyDataSetChanged()
-    }
-
-    fun addItem(i: Int, element: Contact) {
-        contact.add(i, element)
-        notifyDataSetChanged()
-    }
-
     fun getItem(i: Int) = contact[i]
 
     // Updates the contact list everytime ContactViewModel notifies a change

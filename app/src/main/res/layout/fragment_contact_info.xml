@@ -34,7 +34,6 @@
 
             <TextView
                 android:id="@+id/name_display_tv"
-                style="@style/basic_text"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -45,11 +44,11 @@
                 app:layout_constraintBottom_toTopOf="@+id/email_display_tv"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/image_iv" />
+                app:layout_constraintTop_toBottomOf="@+id/image_iv"
+                style="@style/info_title" />
 
             <TextView
                 android:id="@+id/email_display_tv"
-                style="@style/basic_text"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -58,11 +57,11 @@
                 app:layout_constraintEnd_toStartOf="@+id/email_iv"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/name_display_tv" />
+                app:layout_constraintTop_toBottomOf="@+id/name_display_tv"
+                style="@style/info_text" />
 
             <TextView
                 android:id="@+id/phone_display_tv"
-                style="@style/basic_text"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -72,7 +71,8 @@
                 app:layout_constraintEnd_toStartOf="@+id/phone_iv"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/email_display_tv" />
+                app:layout_constraintTop_toBottomOf="@+id/email_display_tv"
+                style="@style/info_text" />
 
             <ImageView
                 android:id="@+id/phone_iv"
